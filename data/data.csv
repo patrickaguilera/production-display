@@ -1,7 +1,7 @@
-Customer, Arm Type, Spring, Quantity, Dock Date
-Maquet, 2001, YWL, 52, 03-03-2025
-Mindray, LCH, YWL, 30, 02-10-2025
-Mindray, LCH, YWL, 30, 03-10-2025
-Simeon, 2075, DBGRN, 75, 11-29-2024
-Simeon, 2075, DBGRN, 15, 11-29-2024
-Simeon, LCH 75, TRGRN, 20, TBD
+Customer, Arm Type, Harness, Spring, Quantity, Dock Date
+Maquet, 2001, 3P, YWL, 52, 03-03-2025
+Mindray, LCH, 3P, YWL, 30, 02-10-2025
+Mindray, LCH, 3P, YWL, 30, 03-10-2025
+Simeon, 2075, 5P, DBGRN, 75, 11-29-2024
+Simeon, 2075, 9P, DBGRN, 15, 11-29-2024
+Simeon, LCH 75, TBD, TRGRN, 20, TBD
