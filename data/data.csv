@@ -1,7 +1,15 @@
-Customer, Arm Type, Harness, Spring, Quantity, Dock Date
-Maquet, 2001, 3P, YWL, 52, 03-03-2025
-Mindray, LCH, 3P, YWL, 30, 02-10-2025
-Mindray, LCH, 3P, YWL, 30, 03-10-2025
-Simeon, 2075, 5P, DBGRN, 75, 11-29-2024
-Simeon, 2075, 9P, DBGRN, 15, 11-29-2024
-Simeon, LCH 75, TBD, TRGRN, 20, TBD
+Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
+Maquet, 2001, 3P, YWL, 52, 01-17-2025,
+Mindray, LCH, 3P, YWL, 60, 01-31-2025,
+Simeon, LCH 75, 3P, TRGRN, 20, 02-18-2025, Already packaged (in QC)
+Simeon, LCH 75, 5P, TRGRN, 10, 02-18-2025, Waiting for Harnesses
+Simeon, LCH 75, 9P, TRGRN, 4, 02-18-2025, Waiting for Harnesses
+Simeon, 2075, 5P, DBGRN, 75, 11-29-2024, Waiting for FR5's
+Simeon, 2075, 9P, DBGRN, 15, 11-29-2024, Waiting for FR5's
+Simeon, 2075, 3P, DBGRN, 150, 02-18-2025, Waiting for FR5's and Harnesses
+Simeon, 2075, 5P, DBGRN, 75, 02-18-2025, Waiting for FR5's and Harnesses
+Simeon, 2075, 9P, DBGRN, 20, 02-18-2025, Waiting for FR5's and Harnesses
+Simeon, 3075, STP, DBPRP, 40, 02-18-2025, Waiting for FR5's
+Simeon, 2075, STP, DBGRN, 10, 02-18-2025, Waiting for FR5's
+Simeon, 2075, STP, GRN, 10, 02-18-2025, Waiting for FR5's
+Simeon, LCH Floor Stand, YWL, 20, 04-04-2025, Patrick to Assemble
