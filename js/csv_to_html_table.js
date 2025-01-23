@@ -9,12 +9,12 @@ CsvToHtmlTable = {
         var csv_options = options.csv_options || {};
         var datatables_options = options.datatables_options || {};
         var custom_formatting = options.custom_formatting || [];
-        //var customTemplates = {};
-        //$.each(custom_formatting, function (i, v) {
-        //    var colIdx = v[0];
-        //    var func = v[1];
-        //    customTemplates[colIdx] = func;
-        //});
+        var customTemplates = {};
+        $.each(custom_formatting, function (i, v) {
+            var colIdx = v[0];
+            var func = v[1];
+            customTemplates[colIdx] = func;
+        });
 
         var $table = $("<table class='table table-striped table-condensed' id='" + el + "-table'></table>");
         var $containerElement = $("#" + el);
