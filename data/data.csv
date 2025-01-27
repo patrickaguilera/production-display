@@ -1,7 +1,5 @@
 Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
-Simeon, LCH 75, 5P, TRGRN, 10, ASAP, Assembled - Waiting for Harnesses
-Simeon, LCH Floor Stand, 3P, YWL, 30, 01-31-2025, Assembled
-Simeon, 2075, 9P, DBGRN, 15, 11-29-2024, Assembled - Waiting for 1 Harness
+Simeon, 2075, 9P, DBGRN, 15, 11-29-2024, Assembled
 Simeon, 2075, 3P, DBGRN, 150, 02-18-2025,
 Mindray, LCH, 3P, YWL, 60, 02-14-2025, 13 Packaged - Waiting for Painted Covers
 Simeon, 2075, 5P, DBGRN, 75, 02-18-2025, Waiting for Harnesses and FS-PIN-DWL-6-19
@@ -9,6 +7,5 @@ Simeon, 2075, 9P, DBGRN, 20, 02-18-2025, Waiting for Harnesses and FS-PIN-DWL-6-
 Simeon, 2075, STP, DBGRN, 10, 02-18-2025, Waiting for FS-PIN-DWL-6-19
 Simeon, 2075, STP, GRN, 10, 02-18-2025, Waiting for FS-PIN-DWL-6-19
 Simeon, 3075, STP, DBPRP, 40, 02-18-2025, Waiting for BK5's and FR5's and FS-PIN-DWL-6-19
-Simeon, LCH 75, 3P, TRGRN, 40, 02-18-2025, Already packaged
 Simeon, LCH 75, 5P, TRGRN, 5, 02-18-2025, Patrick to Assemble
 Simeon, LCH 75, 9P, TRGRN, 8, 02-18-2025, Patrick to Assemble
