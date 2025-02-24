@@ -1,6 +1,7 @@
-Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
-Image Diagnostics, 2075/3075, STP, DBGRN, 10, 02-21-2025, Dave to Complete
-Simeon, 3075, STP, DBPRP, 40, 02-28-2025, Adam to Complete 
-Simeon, 2075, 5P, DBGRN, 75, 02-28-2025,
-Engineering CPR, LCH, SMX, DBWHT, 24, 03-07-2025, Body Assembled - Waiting for Bearing Ends
-Simeon, Floor Stand LCH, 3P, YLW, 50, TBD,
+Priority, Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
+1, Simeon, 3075, STP, DBPRP, 40, 02-28-2025, Adam to Complete 
+2, Simeon, 2075, 5P, DBGRN, 75, 02-28-2025,
+3, Engineering CPR, LCH, SMX, DBWHT, 24, 03-07-2025, Body Assembled - Waiting for Bearing Ends
+4, Simeon, Floor Stand LCH, 3P, YLW, 50, TBD,
+5, Simeon, LCH 75, 5P, TRGRN, 25, TBD,
+6, Simeon, 2075, 3P, DBGRN, 100, 03/28/25, Waiting for Harnesses
