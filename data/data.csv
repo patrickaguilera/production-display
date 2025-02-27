@@ -1,12 +1,11 @@
 Priority, Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
-1, Simeon, 2075, 5P, DBGRN, 75, 02-28-2025,
-2, Engineering CPR, LCH, SMX, DBWHT, 24, 03-07-2025, Body Assembled - Waiting for Bearing Ends
-3, Simeon, Floor Stand LCH, 3P, YLW, 50, 03-17-2025,
-4, Simeon, LCH 75, 5P, TRGRN, 25, 03-17-2025,
-5, Simeon, LCH 75, 3P, TRGRN, 7, 06-07-2025,
-6, Simeon, 2075, STP, GRN, 5, 03/31/25,
-7, Simeon, 2075, STP, DBGRN, 5, 03/31/25,
-8, Simeon, 2075, 3P, DBGRN, 100, 03/31/25, Waiting for Harnesses and Springs
-9, Simeon, 2075, 5P, DBGRN, 75, 03/31/25, Waiting for Harnesses and Springs
-10, Simeon, 2075, 9P, DBGRN, 15, 03/31/25, Waiting for Harnesses and Springs
-11, Simeon, 3075, STP, DBPRP, 40, 03/31/25, Waiting for Painted FR5's and BK5's
+1, Engineering CPR, LCH, SMX, DBWHT, 24, 03-07-2025, Body Assembled - Waiting for Bearing Ends
+2, Simeon, Floor Stand LCH, 3P, YLW, 50, 03-17-2025,
+3, Simeon, LCH 75, 5P, TRGRN, 25, 03-17-2025,
+4, Simeon, LCH 75, 3P, TRGRN, 7, 06-07-2025,
+5, Simeon, 2075, STP, GRN, 5, 03/31/25,
+6, Simeon, 2075, STP, DBGRN, 5, 03/31/25,
+7, Simeon, 2075, 3P, DBGRN, 100, 03/31/25, Waiting for Harnesses and Springs
+8, Simeon, 2075, 5P, DBGRN, 75, 03/31/25, Waiting for Harnesses and Springs
+9, Simeon, 2075, 9P, DBGRN, 15, 03/31/25, Waiting for Harnesses and Springs
+10, Simeon, 3075, STP, DBPRP, 40, 03/31/25, Waiting for Painted FR5's and BK5's
