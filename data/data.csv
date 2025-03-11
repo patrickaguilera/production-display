@@ -1,13 +1,10 @@
 Priority, Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
 1, Engineering CPR, LCH, SMX, DBWHT, 24, 03-07-2025, Body Assembled - Waiting for Bearing Ends
-2, Image Diagnostics, 2001/3001, STP, DBPRP, 5, 03-07-2025, Completed - Need to be tested in Central Axis
-3, Image Diagnostics, Central Axis, STP, N/A, 5, 03-07-2025, Todd/Patrick to Assemble
-4, Simeon, LCH 75, 5P, TRGRN, 25, 03-17-2025,
-5, Simeon, LCH 75, 3P, TRGRN, 8, 06-07-2025,
-6, Simeon, 3075, STP, DBPRP, 40, 03-31-25, Waiting for Springs
-7, Simeon, 2075, 5P, DBGRN, 75, 03-31-25, Waiting for Harnesses and Springs
-8, Simeon, 2075, 3P, DBGRN, 100, 03-31-25, Waiting for Harnesses and Springs
-9, Simeon, 2075, 9P, DBGRN, 15, 03-31-25, Waiting for Harnesses and Springs
-10, Maquet, 2001, 3P, YWL, 52, 05-30-25, Waiting for Harnesses
-11, Maquet, LCH, 3P, ORNG, 52, 05-30-25, Waiting for Harnesses
-12, Maquet, LCH, 3P, BLUE, 52, 05-30-25, Waiting for Harnesses
+2, Simeon, 3075, STP, DBPRP, 40, 03-31-25, Waiting for Springs
+3, Simeon, 2075, 5P, DBGRN, 75, 03-31-25, Waiting for Harnesses and Springs
+4, Simeon, 2075, 3P, DBGRN, 100, 03-31-25, Waiting for Springs
+5, Simeon, 2075, 9P, DBGRN, 15, 03-31-25, Waiting for Harnesses and Springs
+6, Maquet, 2001, 3P, YWL, 52, 05-30-25, Waiting for Harnesses
+7, Maquet, LCH, 3P, ORNG, 52, 05-30-25, Waiting for Harnesses
+8, Maquet, LCH, 3P, BLUE, 52, 05-30-25, Waiting for Harnesses
+9, Simeon, LCH 75, 3P, TRGRN, 8, 06-07-2025, Assembled - Waiting for work order
