@@ -9,12 +9,10 @@ Priority, Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
 8, Scanatron, CA1, 3P, N/A, 1, 03-26-25, Todd/Patrick to assemble
 9, Scanatron, Drop Tube, 32 inch, N/A, 10, 03-31-25, Patrick to Complete
 10, Maximed, 3001/2001, STP, RED, 2, 03-28-25, Patrick to complete
-11, Infabcorp, Floor Stand 2001, N/A, GRN, 10, 03-31-2025, Dave to complete
-12, Simeon, 3075, STP, DBPRP, 40, 03-31-25, Waiting for Springs
-13, Simeon, 2075, 3P, DBGRN, 100, 03-31-25, Ready to pack
-14, Simeon, 2075, 5P, DBGRN, 75, 03-31-25,
-15, Simeon, 2075, 9P, DBGRN, 15, 03-31-25, Waiting for Harnesses
-16, Maquet, 2001, 3P, YWL, 52, 05-30-25,
-17, Maquet, LCH, 3P, ORNG, 52, 05-30-25,
-18, Maquet, LCH, 3P, BLUE, 52, 05-30-25,
-19, Simeon, LCH 75, 3P, TRGRN, 8, 06-07-2025, assembled - Waiting for work order
+11, Simeon, 3075, STP, DBPRP, 40, 03-31-25,
+12, Simeon, 2075, 5P, DBGRN, 75, 03-31-25,
+13, Simeon, 2075, 9P, DBGRN, 15, 03-31-25, Waiting for Harnesses
+14, Maquet, 2001, 3P, YWL, 52, 03-31-25,
+15, Maquet, LCH, 3P, ORNG, 52, 05-30-25,
+16, Maquet, LCH, 3P, BLUE, 52, 05-30-25,
+17, Simeon, LCH 75, 3P, TRGRN, 8, 06-07-2025, assembled - Waiting for work order
