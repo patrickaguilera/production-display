@@ -1,18 +1,16 @@
 Priority, Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
 1, Engineering CPR, LCH, SMX, DBWHT, 24, 03-07-2025, Assembled - Waiting on keys
 2, Scanatron, Drop Tube - 32in, N/A, N/A, 10, 03-31-2025, Patrick to Complete - Waiting on DT's
-3, Scanatron, CA3, 3P/5P/STP, N/A, 1, 04-15-2025, Patrick to Complete
-4, Scanatron, LCH, 5P, BLUE, 1, 04-15-2025, Assembled - to be mounted in CA3
-5, Maquet, 2001, 3P, YLW, 104, TBD,
-6, Simeon, LCH 75, 5P, TRGRN, 20, 05-30-2025, Waiting on harnesses / ROT's
-7, Simeon, 2075, 3P, DBGRN, 75, 05-30-2025, Waiting on harnesses / ROT's
-8, Simeon, 3075, STP, DBPRP, 40, 05-30-2025, Waiting on ROT's / Painted BK5's and FR5's
-9, Simeon, 2075, 3P, DBGRN, 75, 06-31-2025, Waiting on harnesses / ROT's
-10, Simeon, 2075, 5P, DBGRN, 75, 06-31-2025, Waiting on harnesses / ROT's
-11, Simeon, 2075, 9P, DBGRN, 15, 06-31-2025, Waiting on harnesses / ROT's
-12, Simeon, 3075, STP, DBPRP, 40, 06-31-2025, Waiting on ROT's / Painted BK5's and FR5's
-13, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses / ROT's / BK5's
-14, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses / ROT's / BK5's
-15, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Waiting on harnesses / ROT's / BK5's
-16, Simeon, 2075, STP, DBGRN, 10, 09-30-2025, Waiting on ROT's / BK5's
-17, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on ROT's / Painted BK5's and FR5's
+3, Maquet, 2001, 3P, YLW, 104, TBD,
+4, Simeon, LCH 75, 5P, TRGRN, 20, 05-30-2025, Waiting on harnesses / ROT's
+5, Simeon, 2075, 3P, DBGRN, 75, 05-30-2025, Waiting on harnesses / ROT's
+6, Simeon, 3075, STP, DBPRP, 40, 05-30-2025, Waiting on ROT's / Painted BK5's and FR5's
+7, Simeon, 2075, 3P, DBGRN, 75, 06-31-2025, Waiting on harnesses / ROT's
+8, Simeon, 2075, 5P, DBGRN, 75, 06-31-2025, Waiting on harnesses / ROT's
+9, Simeon, 2075, 9P, DBGRN, 15, 06-31-2025, Waiting on harnesses / ROT's
+10, Simeon, 3075, STP, DBPRP, 40, 06-31-2025, Waiting on ROT's / Painted BK5's and FR5's
+11, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses / ROT's / BK5's
+12, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses / ROT's / BK5's
+13, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Waiting on harnesses / ROT's / BK5's
+14, Simeon, 2075, STP, DBGRN, 10, 09-30-2025, Waiting on ROT's / BK5's
+15, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on ROT's / Painted BK5's and FR5's
