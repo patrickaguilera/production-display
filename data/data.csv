@@ -1,23 +1,23 @@
 Priority, Order Number, Customer, Arm Type, Harness/Stop, Spring, Quantity, Target Date, Notes
-1, 106416, Maximed, Yoke, NS, N/A, 1, 03-06-2025, Todd to complete - on hold
-2, 106422, Scanatron, DT - 32in, N/A, N/A, 8, 03-31-2025, Patrick to complete - Waiting on DT's
+1, 106416, Maximed, Yoke, NS, N/A, 1, 03-06-2025, Todd to complete - On hold
+2, 106422, Scanatron, DT - 32in, N/A, N/A, 8, 03-31-2025, Patrick to complete - On hold
 3, 106449, Image Diagnostics, 2001/3001, 3P, DBPRP, 2, 04-30-2025, assembled - To be mounted in CA's
 4, 106449, Image Diagnostics, CA1, 3P, N/A, 2, 04-30-2025, Todd/Patrick to complete - Waiting on SWG-ARM's
-5, TBD, Maquet, LCH, 3P, ORNG, 104, 04-30-2025,
+5, TBD, Maquet, LCH, 3P, ORNG, 104, 04-30-2025, Dave to complete
 6, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 05-06-2025, Assembled - Waiting on EXT-WLD's
-7, 106480, Simeon, LCH 75, 5P, TRGRN, 20, 05-30-2025, Waiting on harnesses / ROT's
-8, 106480, Simeon, 2075, 3P, DBGRN, 75, 05-30-2025, Waiting on harnesses / ROT's
-9, 106480, Simeon, 3075, STP, DBPRP, 40, 05-30-2025, Waiting on ROT's / Painted BK5's and FR5's
+7, 106480, Simeon, LCH 75, 5P, TRGRN, 20, 05-30-2025, Assembled - Waiting on harnesses
+8, 106480, Simeon, 2075, 3P, DBGRN, 75, 05-30-2025, Waiting on ROT's / harnesses
+9, 106480, Simeon, 3075, STP, DBPRP, 40, 05-30-2025, Waiting on painted BK5's / ROT's
 10, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 06-26-2025, Assembled - Waiting on EXT-WLD's 
-11, 106478, Simeon, 2075, 3P, DBGRN, 75, 06-31-2025, Waiting on harnesses / ROT's
-12, 106478, Simeon, 2075, 5P, DBGRN, 75, 06-31-2025, Waiting on harnesses / ROT's
-13, 106478, Simeon, 2075, 9P, DBGRN, 15, 06-31-2025, Waiting on harnesses / ROT's
-14, 106478, Simeon, 3075, STP, DBPRP, 40, 06-31-2025, Waiting on ROT's / Painted BK5's and FR5's
+11, 106478, Simeon, 2075, 3P, DBGRN, 75, 06-31-2025, Waiting on ROT's / harnesses
+12, 106478, Simeon, 2075, 5P, DBGRN, 75, 06-31-2025, Waiting on ROT's / harnesses
+13, 106478, Simeon, 2075, 9P, DBGRN, 15, 06-31-2025, Waiting on ROT's / harnesses
+14, 106478, Simeon, 3075, STP, DBPRP, 40, 06-31-2025, Waiting on painted BK5's and FR5's / ROT's
 15, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on work order and EXT-WLD's
-16, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses / ROT's
-17, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses / ROT's
-18, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Waiting on harnesses / ROT's
+16, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on ROT's / harnesses
+17, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on ROT's / harnesses
+18, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Waiting on ROT's / harnesses
 19, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025, Waiting on ROT's
-20, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on ROT's / Painted BK5's and FR5's
+20, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's / ROT's
 21, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on work order and EXT-WLD's
 22, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on work order and EXT-WLD's
