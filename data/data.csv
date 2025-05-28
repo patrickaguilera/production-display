@@ -1,24 +1,20 @@
 Priority, Order Number, Customer, Arm Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106465, Image Diagnostics, CA1 - Inverted, STP, N/A, 20, 05-09-2025, Patrick to complete
-2, 106465, Image Diagnostics, 2075/3075, STP, DBGRN, 20, 05-09-2025, Adam to complete
-3, 106496, Maximed, Yoke, 3S, N/A, 20, 05-29-2025, Todd to complete
-4, 106480, Simeon, LCH 75, 5P, TRGRN, 20, 05-30-2025,
-5, 106480, Simeon, 2075, 3P, DBGRN, 75, 05-30-2025,
-6, 106480, Simeon, 3075, STP, DBPRP, 40, 05-30-2025,
-7, 106504, Burton, CA1, 3P, N/A, 25, 06-09-2025,
-8, 106504, Burton, LCH, 3P, BLUE, 25, 06-09-2025, Assembled - to be mounted in CA1's before packing
-9, 106504, Burton, Dome, N/A, N/A, 25, 06-09-2025,
-10, 106504, Burton, 12in DT, N/A, N/A, 25, 06-09-2025, Waiting on DT's
-11, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 06-26-2025, Assembled - Waiting on EXT-WLD's 
-12, 106478, Simeon, 2075, 3P, DBGRN, 75, 06-31-2025, Waiting on harnesses
-13, 106478, Simeon, 2075, 5P, DBGRN, 75, 06-31-2025, Waiting on harnesses
-14, 106478, Simeon, 2075, 9P, DBGRN, 15, 06-31-2025, Waiting on harnesses
-15, 106478, Simeon, 3075, STP, DBPRP, 40, 06-31-2025,
-16, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on EXT-WLD's
-17, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses
-18, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses
-19, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Waiting on harnesses
-20, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025,
-21, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025,
-22, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on EXT-WLD's
-23, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on EXT-WLD's
+1, 106496, Maximed, Yoke, 3S, N/A, 20, 05-29-2025, Todd to complete
+2, 106480, Simeon, 3075, STP, DBPRP, 40, 05-30-2025, Adam/Dave to complete
+3, 106504, Burton, CA1, 3P, N/A, 25, 06-09-2025, Todd/Patrick to complete
+4, 106504, Burton, LCH, 3P, BLUE, 25, 06-09-2025, Assembled - to be mounted in CA1's before packing
+5, 106504, Burton, Dome, N/A, N/A, 25, 06-09-2025, Patrick to complete
+6, 106504, Burton, 12in DT, N/A, N/A, 25, 06-09-2025, Waiting on DT's
+7, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 06-26-2025, Assembled - Waiting on EXT-WLD's 
+8, 106478, Simeon, 2075, 3P, DBGRN, 75, 06-31-2025,
+9, 106478, Simeon, 2075, 9P, DBGRN, 15, 06-31-2025,
+10, 106478, Simeon, 2075, 5P, DBGRN, 75, 06-31-2025, Waiting on harnesses
+11, 106478, Simeon, 3075, STP, DBPRP, 40, 06-31-2025, Waiting on painted BK5's
+12, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on EXT-WLD's
+13, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses
+14, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses
+15, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025,
+16, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025,
+17, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
+18, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on EXT-WLD's
+19, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on EXT-WLD's
