@@ -1,11 +1,11 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
 1, 106487, LOC Medical, MD Ceiling Mount, N/A, N/A, 4, 06-06-2025,
 2, 106487, LOC Medical, EXT-ARM - up/down, STP, N/A, 4, 06-06-2025, 
-3, 106487, LOC Medical, Gimble Yoke - FLT-100, N/A, N/A, 4, 06-06-2025, 
-4, 106487, LOC Medical, 2075, STP, RED, 4, 06-06-2025,
-5, 106510, LOC Medical, 2075, STP, RED, 2, 06-06-2025,
+3, 106487, LOC Medical, 2075, STP, RED, 4, 06-06-2025,
+4, 106487, LOC Medical, Gimble Yoke - FLT-100, N/A, N/A, 4, 06-06-2025, 
+5, 106510, LOC Medical, Wall Mount, STP, N/A, 2, 06-06-2025,
 6, 106510, LOC Medical, EXT-ARM - down/down, STP, N/A, 2, 06-06-2025, 
-7, 106510, LOC Medical, Wall Mount, STP, N/A, 2, 06-06-2025,
+7, 106510, LOC Medical, 2075, STP, RED, 2, 06-06-2025,
 8, 106510, LOC Medical, Gimble Yoke - FLT-75, N/A, N/A, 2, 06-06-2025,
 9, 106504, Burton, CA1, 3P, N/A, 25, 06-09-2025, Todd/Patrick to complete
 10, 106504, Burton, LCH, 3P, BLUE, 25, 06-09-2025, Assembled - to be mounted in CA1's before packing
