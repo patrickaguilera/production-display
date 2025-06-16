@@ -5,17 +5,18 @@ Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, T
 4, 106504, Burton, CA1, 3P, N/A, 25, 06-09-2025, Todd/Patrick to complete
 5, 106504, Burton, LCH, 3P, BLUE, 25, 06-09-2025, Assembled - to be mounted in CA1's before packing
 6, 106504, Burton, 12in DT, N/A, N/A, 25, 06-09-2025, Waiting on tubes
-7, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 06-26-2025, Assembled - Waiting on EXT-WLD's 
-8, 106507, Simeon, 3075 (77lbs), STP, DBPRP, 4, 07-11-2025, Assembled - Waiting on yokes
-9, 106507, Simeon, Dual Monitor Yoke, STP, N/A, 4, 07-11-2025, To be mounted in 3075's before packing
-10, 106478, Simeon, 2075, 5P, DBGRN, 75, 07-31-2025, Adam to complete
-11, 106478, Simeon, 3075, STP, DBPRP, 40, 07-31-2025, Waiting on painted BK5's
-12, TBD, OQTIS, 2001, 3P, TBD, 40, TBD,
-13, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on EXT-WLD's
-14, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025,
-15, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025,
-16, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses
-17, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses
-18, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
-19, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on EXT-WLD's
-20, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on EXT-WLD's
+7, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 06-26-2025, Assembled - Waiting on EXT-WLD's
+10, 106536, Oqtis, 2001, 3P, GRN, 40, 07-11-2025,
+11, 106537, Maquet, 2001, 3P, RED, 52, 07-30-2025, Waiting for harnesses
+12, 106507, Simeon, 3075 (77lbs), STP, DBPRP, 4, 07-11-2025, Assembled - Waiting on yokes
+13, 106507, Simeon, Dual Monitor Yoke, STP, N/A, 4, 07-11-2025, To be mounted in 3075's before packing
+14, 106478, Simeon, 2075, 5P, DBGRN, 75, 07-31-2025, Adam to complete
+15, 106478, Simeon, 3075, STP, DBPRP, 40, 07-31-2025, Waiting on painted BK5's
+16, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on EXT-WLD's
+17, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025,
+18, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025,
+19, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses
+20, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses
+21, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
+22, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on EXT-WLD's
+23, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on EXT-WLD's
