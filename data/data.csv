@@ -3,18 +3,17 @@ Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, T
 2, 106510, LOC Medical, 2075, STP, RED, 2, 06-06-2025,  Assembled - Waiting for yoke plate
 3, 106510, LOC Medical, Gimble Yoke - FLT-75, N/A, N/A, 2, 06-06-2025,  Assembled - Waiting for yoke plate
 4, 106504, Burton, 12in DT, N/A, N/A, 25, 06-09-2025, Waiting on tubes
-5, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 06-26-2025, Assembled - Waiting on EXT-WLD's
-6, 106536, Oqtis, 2001, 3P, GRN, 40, 07-11-2025,
-7, 106537, Maquet, 2001, 3P, RED, 52, 07-30-2025, Waiting for harnesses
+5, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 06-26-2025, SA's Assembled - rework EXT-WLD's
+6, 106536, Oqtis, 2001, 3P, GRN, 40, 07-11-2025, Assembled - Adam to complete
+7, 106537, Maquet, 2001, 3P, RED, 52, 07-30-2025, Waiting on GP tester
 8, 106507, Simeon, 3075 (77lbs), STP, DBPRP, 4, 07-11-2025, Assembled - Waiting on yokes
 9, 106507, Simeon, Dual Monitor Yoke, STP, N/A, 4, 07-11-2025, To be mounted in 3075's before packing
-10, 106478, Simeon, 2075, 5P, DBGRN, 75, 07-31-2025, Adam to complete
-11, 106478, Simeon, 3075, STP, DBPRP, 40, 07-31-2025, Waiting on painted BK5's
-12, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on EXT-WLD's
-13, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025,
-14, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025,
-15, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses
-16, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses
-17, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
-18, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on EXT-WLD's
-19, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on EXT-WLD's
+10, 106478, Simeon, 3075, STP, DBPRP, 40, 07-31-2025, Waiting on painted BK5's
+11, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on EXT-WLD's
+12, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025,
+13, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025,
+14, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses
+15, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses
+16, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
+17, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on EXT-WLD's
+18, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on EXT-WLD's
