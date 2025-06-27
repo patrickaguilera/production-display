@@ -1,21 +1,20 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106523, LOC Medical, Wall Mount, STP, N/A, 4, 06-18-2025, Waiting for EXT-ARM's
-2, 106523, LOC Medical, 2075, STP, RED, 4, 06-18-2025, Waiting for EXT-ARM's
-3, 106523, LOC Medical, Gimble Yoke, STP, N/A, 4, 06-18-2025, Waiting for EXT-ARM's
+1, 106523, LOC Medical, Wall Mount, STP, N/A, 4, 06-18-2025, Assembled - Waiting for EXT-ARM's
+2, 106523, LOC Medical, 2075, STP, RED, 4, 06-18-2025, Assembled - Waiting for EXT-ARM's
+3, 106523, LOC Medical, Gimble Yoke, STP, N/A, 4, 06-18-2025, Assembled - Waiting for EXT-ARM's
 4, 106523, LOC Medical, EXT-ARM - 1000mm, STP, N/A, 3, 06-18-2025, Waiting for EXT-ARM's
 5, 106523, LOC Medical, EXT-ARM - 600mm, STP, N/A, 1, 06-18-2025, Waiting for EXT-ARM's
-6, 106523, LOC Medical, CAT6 - 144in, N/A, N/A, 6, 06-18-2025, Patrick to complete
-7, 106523, LOC Medical, CAT6 - 128in, N/A, N/A, 2, 06-18-2025, Patrick to complete
+6, 106523, LOC Medical, CAT6 - 144in, N/A, N/A, 6, 06-18-2025, Assembled - Waiting for EXT-ARM's
+7, 106523, LOC Medical, CAT6 - 128in, N/A, N/A, 2, 06-18-2025, Assembled - Waiting for EXT-ARM's
 8, 106309, Infab Corp, 2001 FS, N/A, GRN, 5, 07-03-2025, No loctite on STP-RNG
-9, 106537, Maquet, 2001, 3P, RED, 52, 07-30-2025, Assembled - Waiting on GB tester
-10, 106507, Simeon, 3075 (77lbs), STP, DBPRP, 3, 07-11-2025, Assembled - Waiting on yoke parts
-11, 106507, Simeon, Dual Monitor Yoke, STP, N/A, 3, 07-11-2025, Waiting on parts
-12, 106478, Simeon, 3075, STP, DBPRP, 40, 07-31-2025, Waiting on painted BK5's
-13, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on EXT-WLD's
-14, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025, Assembled - Waiting on work order
-15, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Waiting on BK5's
-16, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on BK5's
-17, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on BK5's
-18, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
-19, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on EXT-WLD's
-20, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on EXT-WLD's
+9, 106507, Simeon, 3075 (77lbs), STP, DBPRP, 3, 07-11-2025, Assembled - Waiting on yoke parts
+10, 106507, Simeon, Dual Monitor Yoke, STP, N/A, 3, 07-11-2025, Waiting on parts
+11, 106478, Simeon, 3075, STP, DBPRP, 40, 07-31-2025, Waiting on painted BK5's
+12, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, Waiting on EXT-WLD's
+13, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025, Assembled - Waiting on work order
+14, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Assembled - Waiting on work order
+15, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on BK5's
+16, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on BK5's
+17, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
+18, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, Waiting on EXT-WLD's
+19, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, Waiting on EXT-WLD's
