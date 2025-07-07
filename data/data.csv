@@ -1,14 +1,17 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106507, Simeon, 3075 (77lbs), STP, DBPRP, 3, 07-11-2025, Assembled - Waiting on yoke parts
-2, 106507, Simeon, Dual Monitor Yoke, STP, N/A, 3, 07-11-2025, Waiting on parts
-3, 106478, Simeon, 3075, STP, DBPRP, 40, 07-31-2025, 11 packed - Waiting on painted BK5's
-4, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
-5, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025, Assembled
-6, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Assembled
-7, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025,
-8, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025,
-9, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
-10, TBD, Maquet, 2001, 3P, YLW, 52, 10-02-2025,
-11, TBD, Maquet, 2001, 3P, RED, 52, 10-02-2025, 
-12, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, SA's assembled - Waiting on EXT-ARM's
-13, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
+1, 106557, Dewimed, 2001, STP, DBGRN, 5, 07-07-2025, Waiting for custom FR5's
+2, 106507, Simeon, 3075 (77lbs), STP, DBPRP, 3, 07-11-2025, Assembled - Waiting on yoke parts
+3, 106507, Simeon, Dual Monitor Yoke, STP, N/A, 3, 07-11-2025, Waiting on parts
+4, 106478, Simeon, 3075, STP, DBPRP, 40, 07-31-2025, 11 packed - Waiting on painted BK5's
+5, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
+6, 106479, Simeon, 2075, STP, DBGRN, 10, 09-30-2025, Assembled
+7, 106479, Simeon, 2075, 9P, DBGRN, 15, 09-30-2025, Assembled
+8, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on harnesses and FR5's
+9, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses and FR5's
+10, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
+11, TBD, Maquet, 2001, 3P, RED, 104, 10-02-2025, Packaged in QC - Rework slip rings
+12, TBD, Maquet, 2001, 3P, YLW, 104, 10-02-2025, Packaged in QC - Rework slip rings
+13, TBD, Maquet, 2001, 3P, RED, 52, 10-02-2025,
+14, TBD, Maquet, 2001, 3P, YLW, 208, 10-02-2025, 
+15, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, SA's assembled - Waiting on EXT-ARM's
+16, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
