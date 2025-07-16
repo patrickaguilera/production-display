@@ -1,13 +1,11 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106532, St Jude, 2001, STP, RED, 2, 07-10-2025, Assembled - Waiting for EAD parts
-2, 106532, St Jude, EAD, STP, N/A, 2, 07-10-2025, Waiting for parts
-3, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
-4, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on FR5's
-5, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses and FR5's
-6, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
-7, TBD, Maquet, 2001, 3P, RED, 104, 10-02-2025, Packaged in QC - Rework slip rings
-8, TBD, Maquet, 2001, 3P, YLW, 104, 10-02-2025, Packaged in QC - Rework slip rings
-9, TBD, Maquet, 2001, 3P, RED, 52, 10-02-2025,
-10, TBD, Maquet, 2001, 3P, YLW, 156, 10-02-2025, 
-11, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, SA's assembled - Waiting on EXT-ARM's
-12, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
+1, TBD, Maquet, 2001, 3P, YLW, 104, ASAP, Packaged in QC - Rework slip rings
+2, TBD, Maquet, 2001, 3P, RED, 104, ASAP, Packaged in QC - Rework slip rings
+3, TBD, Maquet, 2001, 3P, YLW, 104, ASAP, 
+4, TBD, Maquet, 2001, 3P, RED, 52, ASAP,
+5, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
+6, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on FR5's
+7, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on harnesses and FR5's
+8, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
+9, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, SA's assembled - Waiting on EXT-ARM's
+10, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
