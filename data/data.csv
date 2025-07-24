@@ -1,5 +1,5 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106589, Maquet, 2001, 3P, YLW, 104, ASAP, Waiting on harnesses
+1, 106589, Maquet, 2001, 3P, YLW, 104, ASAP,
 2, 106590, Maquet, 2001, 3P, RED, 52, ASAP, Waiting on work order
 3, TBD, Maquet, LCH, 3P, ORNG, 52, ASAP, Packaged in QC - Rework Slip Rings
 4, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
