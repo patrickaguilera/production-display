@@ -1,6 +1,6 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
 1, 106591, Maquet, LCH, 3P, BLUE, 52, ASAP, Adam to complete
-2, TBD, Maquet, 2001, 3P, RED, ASAP,
+2, TBD, Maquet, 2001, 3P, RED, 104, ASAP, Waiting on harnesses
 3, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
 4, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on FR5's
 5, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on FR5's
