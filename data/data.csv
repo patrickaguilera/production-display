@@ -1,10 +1,9 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106591, Maquet, LCH, 3P, BLUE, 52, ASAP, Adam to complete
-2, TBD, Maquet, 2001, 3P, RED, 104, ASAP, Waiting on harnesses
-3, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
-4, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on FR5's
-5, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on FR5's
-6, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
-7, 106599, Simeon, LCH 75, 3P, TRGRN, 40, 09-30-2025,
-8, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, SA's assembled - Waiting on EXT-ARM's
-9, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
+1, TBD, Maquet, 2001, 3P, RED, 104, ASAP, Waiting on harnesses
+2, 106309, Engineering CPR, LCH, SMX, DBWHT, 8, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
+3, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on FR5's
+4, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on FR5's
+5, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
+6, 106599, Simeon, LCH 75, 3P, TRGRN, 40, 09-30-2025,
+7, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 11-05-2025, SA's assembled - Waiting on EXT-ARM's
+8, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
