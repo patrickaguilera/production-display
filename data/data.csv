@@ -1,9 +1,12 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106590, Maquet, 2001, 3P, RED, 104, ASAP, Adam to complete
-2, 106589, Maquet, 2001, 3P, YLW, 208, ASAP, Waiting on harnesses
-3, 106631, Maquet, LCH, 3P, BLUE, 104, ASAP, Waiting on harnesses
-4, 106479, Simeon, 2075, 3P, DBGRN, 70, 09-30-2025, Waiting on FR5's
-5, 106479, Simeon, 2075, 5P, DBGRN, 75, 09-30-2025, Waiting on FR5's
-6, 106479, Simeon, 3075, STP, DBPRP, 40, 09-30-2025, Waiting on painted BK5's and FR5's
-7, 106599, Simeon, LCH 75, 3P, TRGRN, 40, 09-30-2025, Waiting on SR adapters
+1, 106630, Maquet, LCH FS, 3P, BLUE, 52, 09-17-2025, Adam to rework
+2, 106589, Maquet, 2001, 3P, YLW, 208, 08-29-2025, Waiting on harnesses
+3, 106631, Maquet, LCH, 3P, BLUE, 52, 08-29-2025,
+4, 106479, Simeon, 2075, 3P, DBGRN, 70, 08-29-2025,
+5, 106479, Simeon, 2075, 5P, DBGRN, 75, 08-29-2025,
+6, 106479, Simeon, 3075, STP, DBPRP, 40, 08-29-2025, Waiting on painted BK5's and FR5's
+7, 106599, Simeon, LCH 75, 3P, TRGRN, 40, 08-29-2025, Waiting on SR adapters
 8, 106309, Engineering CPR, LCH, SMX, DBWHT, 18, 09-03-2025, SA's assembled - Waiting on EXT-ARM's
+9, 106633, Oqtis, 2001, 3P, GRN, 40, 09-10-2025,
+10, 106629, Maquet, 2001, 3P, YLW, 208, 09-17-2025, Waiting on harnesses
+11, 106631, Maquet, LCH, 3P, BLUE, 52, 09-17-2025, Waiting on harnesses
