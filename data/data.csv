@@ -1,11 +1,11 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
 1, 106479, Simeon, 2075, 3P, DBGRN, 70, 08-29-2025,
 2, 106479, Simeon, 2075, 5P, DBGRN, 50, 08-29-2025,
-3, 106479, Simeon, 3075, STP, DBPRP, 16, 08-29-2025,
+3, 106479, Simeon, 3075, STP, DBPRP, 24, 08-29-2025,
 4, 106599, Simeon, LCH 75, 3P, TRGRN, 40, 08-29-2025,
 5, 106309, Engineering CPR, LCH, SMX, DBWHT, 18, 09-03-2025,
 6, 106633, Oqtis, 2001, 3P, GRN, 40, 09-10-2025,
 7, 106631, Maquet, LCH, 3P, BLUE, 52, 09-17-2025, Waiting on harnesses
 8, 106629, Maquet, 2001, 3P, YLW, 208, 09-17-2025, Waiting on harnesses
 9, 106479, Simeon, 2075, 5P, DBGRN, 25, 08-29-2025, Waiting on harnesses
-10, 106479, Simeon, 3075, STP, DBPRP, 24, 08-29-2025, Waiting on painted BK5's and FR5's
+10, 106479, Simeon, 3075, STP, DBPRP, 16, 08-29-2025, Waiting on painted BK5's and FR5's
