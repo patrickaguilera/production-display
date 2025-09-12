@@ -1,13 +1,13 @@
-Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106479, Simeon, 2075, 5P, DBGRN, 25, 08-29-2025, Waiting on harnesses
-2, 106479, Simeon, 3075, STP, DBPRP, 16, 08-29-2025, Waiting on painted BK5's and FR5's
-3, 106631, Maquet, LCH, 3P, BLUE, 52, 09-17-2025,
-4, 106629, Maquet, 2001, 3P, YLW, 208, 09-17-2025,
-5, 106642, Burton, CA1, 3P, N/A, 1, 09-18-2025, Patrick to complete
-6, 106642, Burton, CA2, 3P, N/A, 2, 09-18-2025, Patrick to complete
-7, 106649, Burton, LCH, 3P, BLUE, 10, 10-03-2025, Patrick to complete
-8, 106661, Maquet, LCH, 3P, ORNG, 52, 10-20-2025, Packaged in QC - Rework SR's
-9, 106660, Maquet, LCH, 3P, BLUE, 52, 10-20-2025,
-10, 106659, Maquet, 2001, 3P, YLW, 208, 10-20-2025, Waiting on harnesses
-11, 106309, Engineering CPR, LCH, SMX, DBWHT, 2, 11-05-2025, SA's assembled - EXT-ARM's need repaint
-12, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
+Priority, Order Number, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
+1, 106479, 2075, 5P, DBGRN, 25, 08-29-2025, Waiting on harnesses
+2, 106479, 3075, STP, DBPRP, 16, 08-29-2025, Waiting on painted BK5's and FR5's
+3, 106631, LCH, 3P, BLUE, 52, 09-17-2025,
+4, 106629, 2001, 3P, YLW, 208, 09-17-2025,
+5, 106642, CA1, 3P, N/A, 1, 09-18-2025, Patrick to complete
+6, 106642, CA2, 3P, N/A, 2, 09-18-2025, Patrick to complete
+7, 106649, LCH, 3P, BLUE, 10, 10-03-2025, Patrick to complete
+8, 106661, LCH, 3P, ORNG, 52, 10-20-2025, Packaged in QC - Rework SR's
+9, 106660, LCH, 3P, BLUE, 52, 10-20-2025,
+10, 106659, 2001, 3P, YLW, 208, 10-20-2025, Waiting on harnesses
+11, 106309, SMX, N/A, DBWHT, 2, 11-05-2025, SA's assembled - EXT-ARM's need repaint
+12, 106309, SMX, N/A, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
