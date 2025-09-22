@@ -1,9 +1,8 @@
 Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, Target Date, Notes
-1, 106629, Maquet, 2001, 3P, YLW, 208, 09-17-2025,
-2, 106479, Simeon, 2075, 5P, DBGRN, 25, 08-29-2025, Waiting on harnesses
-3, 106479, Simeon, 3075, STP, DBPRP, 16, 08-29-2025, Waiting on painted BK5's and FR5's
-4, 106661, Maquet, LCH, 3P, ORNG, 52, 10-20-2025, Packaged in QC - Rework SR's
-5, 106660, Maquet, LCH, 3P, BLUE, 52, 10-20-2025,
-6, 106659, Maquet, 2001, 3P, YLW, 208, 10-20-2025, Waiting on harnesses
-7, 106309, Engineering CPR, LCH, SMX, DBWHT, 2, 11-05-2025, SA's assembled - EXT-ARM's need repaint
-8, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
+1, 106479, Simeon, 2075, 5P, DBGRN, 25, 08-29-2025, Waiting on harnesses
+2, 106479, Simeon, 3075, STP, DBPRP, 16, 08-29-2025, Waiting on painted BK5's and FR5's
+3, 106661, Maquet, LCH, 3P, ORNG, 52, 10-20-2025, Packaged in QC - Rework SR's
+4, 106660, Maquet, LCH, 3P, BLUE, 52, 10-20-2025,
+5, 106659, Maquet, 2001, 3P, YLW, 208, 10-20-2025, Waiting on harnesses
+6, 106309, Engineering CPR, LCH, SMX, DBWHT, 2, 11-05-2025, SA's assembled - EXT-ARM's need repaint
+7, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled - Waiting on EXT-ARM's
