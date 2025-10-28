@@ -2,5 +2,7 @@ Priority, Order Number, Customer, Product Type, Harness/STP, Spring, Quantity, T
 1, 106479, Simeon, 3075, STP, DBPRP, 16, 08-29-2025, Waiting on painted parts
 2, 106681, Maquet, 2001, 3P, YLW, 208, 10-31-2025,
 3, 106706, Maximed, 3001, STP, ORNG, 35, 11-28-2025, Waiting on painted parts
-4, 106706, Maximed, EMM Yoke, N/A, N/A, 35, 11-28-2025, Waiting on painted parts
-5, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled
+4, 106706, Maximed, 3001 Yoke, N/A, N/A, 35, 11-28-2025, Waiting on painted parts
+5, 106716, Maximed, 3001/2001, STP, WHT, 27, 11-28-2025, Waiting on painted parts
+6, 106717, Maximed, 2001 Yoke, N/A, N/A, 35, 11-28-2025, Waiting on painted parts
+7, 106309, Engineering CPR, LCH, SMX, DBWHT, 5, 12-17-2025, SA's assembled
