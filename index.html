@@ -1,3 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>XLSX Hard-Coded Column Filter</title>
+  <style>
+    table, th, td {
+      border: 1px solid #333;
+      border-collapse: collapse;
+      padding: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Upload XLSX File</h2>
+<input type="file" id="fileInput" accept=".xlsx" />
+
+<h3>Filtered Output</h3>
+<div id="output"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<script>
 const XLSX = require("xlsx");
 const fs = require("fs");
 
@@ -62,3 +86,8 @@ const htmlTable = buildHtmlTable(filteredData);
 fs.writeFileSync("output.html", htmlTable, "utf8");
 
 console.log("HTML table created: output.html");
+
+</script>
+
+</body>
+</html>
