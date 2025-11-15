@@ -19,10 +19,12 @@
 
 <script>
 
-// 👉 HIDE COLUMNS BY ZERO-BASED INDEX
-// Example: hide columns 1 (B) and 3 (D)
+// HIDE COLUMNS BY ZERO-BASED INDEX
 const hiddenColumnIndexes = [7, 8]; 
 
+// COLUMN to check for emptiness (zero-based index)
+const checkColumnIndex = 5;
+  
 document.getElementById("fileInput").addEventListener("change", function(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -38,10 +40,16 @@ document.getElementById("fileInput").addEventListener("change", function(e) {
         // Convert sheet → array-of-arrays
         let json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-        // Remove columns by index
+        // --- STEP 1: Remove columns by index
         json = json.map(row => row.filter((_, colIndex) =>
             !hiddenColumnIndexes.includes(colIndex)
         ));
+
+        // --- STEP 2: Remove rows only if checkColumnIndex is empty ---
+        rows = rows.filter(row => {
+            const value = row[checkColumnIndex];
+            return value !== undefined && value !== null && value !== "";
+        });
 
         // Convert to HTML
         const html = XLSX.utils.sheet_to_html(
