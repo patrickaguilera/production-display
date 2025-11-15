@@ -30,15 +30,15 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
       <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0"></iframe>
       <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0"></iframe>
     </div>
-    <h1>Medium Duty Production Dashboard</h1>
-  </div>
-
-  <div class="toggle-section">
-    <label>Show Orders:</label>
-    <select id="orderTypeToggle" class="form-select w-auto d-inline-block">
-      <option value="medium">Medium Duty</option>
-      <option value="light">Light Duty</option>
-    </select>
+    <h1>
+      <div class="toggle-section">
+        <select id="orderTypeToggle" class="form-select w-auto d-inline-block">
+          <option value="medium">Medium Duty</option>
+          <option value="light">Light Duty</option>
+        </select>
+      </div>
+      Production Dashboard
+    </h1>
   </div>
 
   <div class="table-section">
@@ -48,9 +48,10 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
 
 <script>
 const hiddenColumnIndexes = [2,3,7,8];     // columns to hide
+// New visible column indexes
 const statusColumnIndex = 2;                // color "PAST DUE" or "OKAY"
 const partColumnIndex = 3;                  // part number
-const checkColumnIndex = 5;                 // remove rows where this column is empty
+const checkColumnIndex = 4;                 // remove rows where this column is empty
 const xlsxFileUrl = "data/latest.xlsx";
 
 let allRows = [];
