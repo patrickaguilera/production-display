@@ -21,6 +21,7 @@ table { font-size: 1.5rem; width: 100%; border-collapse: collapse; table-layout:
 th, td { border: 1px solid #333; padding: 6px; text-align: left; }
 thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
 .toggle-section { text-align: center; margin-top: 10px; }
+.error-message { color: red; font-size: 1.5rem; text-align: center; margin-top: 20px; }
 </style>
 </head>
 <body>
@@ -48,20 +49,20 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
 </div>
 
 <script>
-const hiddenColumnIndexes = [2,3,7,8];  // columns to hide
-const statusColumnIndex = 3;             // cell to color ("PAST DUE" / "OKAY"), zero-based
-const partColumnIndex = 4;               // part# column to determine duty type
-const checkColumnIndex = 5;              // remove row if this column is empty
-const xlsxFileUrl = './data/order_status_11122025_095944.xlsx';
+const hiddenColumnIndexes = [2,3,7,8];  
+const statusColumnIndex = 3;           
+const partColumnIndex = 4;             
+const checkColumnIndex = 5;            
+// Example GitHub Pages raw URL; replace username/repo/path with your repo info
+const xlsxFileUrl = 'https://raw.githubusercontent.com/username/repo/main/data/order_status_11122025_095944.xlsx';
 
-let allRows = [];  // store all rows to re-filter when toggle changes
+let allRows = [];
 
-// Build HTML table with cell-level coloring for status column
+// Build HTML table
 function buildHtmlTable(rows){
   if(rows.length === 0) return "<p>No data to display.</p>";
 
   const colCount = rows[0].length;
-
   let thead = '<thead><tr>';
   for(let i = 0; i < colCount; i++){
     thead += `<th>${rows[0][i]}</th>`;
@@ -74,23 +75,19 @@ function buildHtmlTable(rows){
     for(let c = 0; c < colCount; c++){
       const cellValue = rows[r][c] !== undefined ? rows[r][c] : '';
       let color = '';
-
-      // Only color status column
       if(c === statusColumnIndex){
         if(cellValue.toString().toUpperCase() === 'PAST DUE') color = 'red';
         else if(cellValue.toString().toUpperCase() === 'OKAY') color = 'green';
       }
-
       tbody += `<td style="color: ${color}">${cellValue}</td>`;
     }
     tbody += '</tr>';
   }
   tbody += '</tbody>';
-
   return `<table>${thead}${tbody}</table>`;
 }
 
-// Determine if part# is medium or light duty
+// Duty type
 function getDutyType(partNumber){
   if(!partNumber) return 'light';
   const firstGroup = partNumber.split('-')[0].toUpperCase();
@@ -103,41 +100,41 @@ function getDutyType(partNumber){
 // Filter rows by duty type toggle
 function filterByDutyType(rows, type){
   return rows.filter((row, idx) => {
-    if(idx === 0) return true; // keep header
+    if(idx === 0) return true; 
     const partNumber = row[partColumnIndex];
     return getDutyType(partNumber) === type;
   });
 }
 
-// Render table based on current toggle selection
+// Render filtered table
 function renderFilteredTable(){
   const toggleElement = document.getElementById('orderTypeToggle');
   const toggleValue = toggleElement.value;
-
-  // Save selection to localStorage
   localStorage.setItem('orderTypeToggle', toggleValue);
-
   const filteredRows = filterByDutyType(allRows, toggleValue);
   document.getElementById("output").innerHTML = buildHtmlTable(filteredRows);
 }
 
-// Load XLSX and render table
+// Load XLSX
 function loadAndRenderTable(){
   fetch(xlsxFileUrl)
-    .then(res => res.arrayBuffer())
+    .then(res => {
+      if(!res.ok) throw new Error("File not found or cannot be accessed.");
+      return res.arrayBuffer();
+    })
     .then(data => {
       const workbook = XLSX.read(data, { type: 'array' });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
 
-      // Hide unwanted columns
-      rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
+      // Hide columns
+      rows = rows.map(row => row.filter((_, idx) => !hiddenColumnIndexes.includes(idx)));
 
-      // Remove rows if checkColumnIndex empty
+      // Remove empty rows
       rows = rows.filter(row => {
-        const value = row[checkColumnIndex];
-        return value !== undefined && value !== null && value !== "";
+        const val = row[checkColumnIndex];
+        return val !== undefined && val !== null && val !== "";
       });
 
       // Pad rows
@@ -148,9 +145,9 @@ function loadAndRenderTable(){
         return newRow;
       });
 
-      allRows = rows; // store all rows for toggle filtering
+      allRows = rows;
 
-      // Set toggle to last saved value or default
+      // Restore toggle from localStorage
       const toggleElement = document.getElementById('orderTypeToggle');
       const savedToggle = localStorage.getItem('orderTypeToggle');
       if(savedToggle) toggleElement.value = savedToggle;
@@ -159,14 +156,12 @@ function loadAndRenderTable(){
     })
     .catch(err => {
       console.error("Error loading XLSX:", err);
-      document.getElementById("output").innerHTML = "<p>Error loading table.</p>";
+      document.getElementById("output").innerHTML = `<p class="error-message">Error loading table. Please check the XLSX file URL.</p>`;
     });
 }
 
 // Initial load
 loadAndRenderTable();
-
-// Re-render when toggle changes
 document.getElementById('orderTypeToggle').addEventListener('change', renderFilteredTable);
 
 // Auto-refresh at 8:00 AM daily
@@ -178,7 +173,7 @@ function scheduleDailyRefresh(hour = 8, minute = 0){
   const timeout = next - now;
   setTimeout(() => {
     loadAndRenderTable();
-    scheduleDailyRefresh(hour, minute); // schedule next day
+    scheduleDailyRefresh(hour, minute);
   }, timeout);
 }
 scheduleDailyRefresh();
