@@ -34,7 +34,7 @@ const allowedColumns = ["Name", "ORDER#", "ORDER DATE", "REQD DATE", "STATUS", "
 // --------------------------------------------------
 // 2. LOAD WORKBOOK
 // --------------------------------------------------
-const workbook = XLSX.readFile("input.xlsx");
+const workbook = XLSX.readFile("data/data.xlsx");
 const sheetName = workbook.SheetNames[0];
 const sheet = workbook.Sheets[sheetName];
 
