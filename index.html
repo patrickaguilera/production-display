@@ -2,73 +2,95 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>XLSX to HTML Table</title>
+    <title>Medium Duty Production Display</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Optional Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+    <!-- SheetJS -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
     <style>
       body { font-family: Arial, sans-serif; margin: 20px; }
-      table { border-collapse: collapse; margin-top: 20px; }
-      td, th { border: 1px solid #333; padding: 6px; }
+      iframe { margin-bottom: 15px; }
     </style>
   </head>
   <body>
-  
-    <div class="col">
-      <script src="https://cdn.logwork.com/widget/text.js"></script>
-      
-      <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0" width="100%" height="100"></iframe>
-      <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0" width="100%" height="200"></iframe>
-    
-      
-      <h1>Medium Duty Production Display</h1>
-      <div id="table-container"></div>
+    <div class="container">
+      <!-- Clocks / Widgets -->
+      <div class="mb-3">
+        <script src="https://cdn.logwork.com/widget/text.js"></script>
+        <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0" width="100%" height="100"></iframe>
+        <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0" width="100%" height="200"></iframe>
+      </div>
+
+      <h1 class="mb-4">Medium Duty Production Display</h1>
+
+      <!-- File Upload -->
+      <div class="mb-3">
+        <input type="file" class="form-control" id="fileInput" accept=".xlsx" />
+      </div>
+
+      <!-- Table Container -->
+      <div class="table-responsive">
+        <div id="output"></div>
+      </div>
     </div>
-  
-  <input type="file" id="fileInput" accept=".xlsx" />
-  <div id="output"></div>
-  
-  <script>
-  
-  // COLUMNS TO HIDE (zero-based index)
-  const hiddenColumnIndexes = [7, 8];  // example
-  
-  // COLUMN to check for emptiness (zero-based index)
-  const checkColumnIndex = 5;
-  
-  document.getElementById("fileInput").addEventListener("change", function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-  
-      const reader = new FileReader();
-      reader.onload = function(event) {
+
+    <script>
+      // COLUMNS TO HIDE (zero-based index)
+      const hiddenColumnIndexes = [7, 8];  // example
+
+      // COLUMN to check for emptiness (zero-based index)
+      const checkColumnIndex = 5;
+
+      document.getElementById("fileInput").addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
           const data = new Uint8Array(event.target.result);
           const workbook = XLSX.read(data, { type: 'array' });
-  
+
           const sheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[sheetName];
-  
+
           let rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  
-          // --- STEP 1: Hide unwanted columns ---
-          rows = rows.map(row =>
-              row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex))
-          );
-  
-          // --- STEP 2: Remove rows only if checkColumnIndex is empty ---
+
+          // --- STEP 1: Remove rows if column 5 is empty ---
           rows = rows.filter(row => {
-              const value = row[checkColumnIndex];
-              return value !== undefined && value !== null && value !== "";
+            const value = row[checkColumnIndex];
+            return value !== undefined && value !== null && value !== "";
           });
-  
-          const html = XLSX.utils.sheet_to_html(
-              XLSX.utils.aoa_to_sheet(rows)
+
+          // --- STEP 2: Hide unwanted columns ---
+          rows = rows.map(row =>
+            row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex))
           );
-  
-          document.getElementById("output").innerHTML = html;
-      };
-  
-      reader.readAsArrayBuffer(file);
-  });
-  </script>
-  
+
+          // Convert to sheet → HTML
+          const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows));
+
+          // Add Bootstrap table classes
+          const tempDiv = document.createElement("div");
+          tempDiv.innerHTML = html;
+          const table = tempDiv.querySelector("table");
+          table.classList.add("table", "table-striped", "table-bordered", "table-hover");
+
+          document.getElementById("output").innerHTML = tempDiv.innerHTML;
+        };
+
+        reader.readAsArrayBuffer(file);
+      });
+    </script>
   </body>
 </html>
