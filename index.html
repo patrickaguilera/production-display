@@ -1,91 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>XLSX to HTML Table</title>
-
-  <!-- SheetJS browser build -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
   <style>
-    table {
-      border-collapse: collapse;
-      margin-top: 20px;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid #888;
-      padding: 6px 10px;
-      text-align: left;
-    }
-    th {
-      background: #f0f0f0;
-    }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; margin-top: 20px; }
+    td, th { border: 1px solid #333; padding: 6px; }
   </style>
 </head>
-
 <body>
 
-<h2>Select Excel File</h2>
-<input type="file" id="fileInput" accept=".xlsx,.xls" />
+<h2>Convert XLSX to HTML Table</h2>
 
+<input type="file" id="fileInput" accept=".xlsx" />
 <div id="output"></div>
 
 <script>
-  // Allowed columns (hard-coded)
-  const allowedColumns = ["Name", "ORDER#", "ORDER DATE", "REQD DATE", "STATUS", "PART#", "QTY.", "DESCRIPTION", "COMMENTS"]; // change as needed
+document.getElementById("fileInput").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  document.getElementById("fileInput").addEventListener("change", handleFile, false);
-
-  function handleFile(evt) {
-    const file = evt.target.files[0];
     const reader = new FileReader();
+    reader.onload = function(event) {
+        const data = new Uint8Array(event.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
 
-    reader.onload = function(e) {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
+        // Use the first sheet
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
 
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
+        // Convert sheet to HTML
+        const html = XLSX.utils.sheet_to_html(worksheet);
 
-      const rows = XLSX.utils.sheet_to_json(sheet);
-      const filtered = rows.map(row => {
-        let newRow = {};
-        allowedColumns.forEach(col => newRow[col] = row[col] || "");
-        return newRow;
-      });
-
-      document.getElementById("output").innerHTML = buildTable(filtered);
+        // Display in the page
+        document.getElementById("output").innerHTML = html;
     };
-
     reader.readAsArrayBuffer(file);
-  }
-
-  function buildTable(rows) {
-    if (!rows.length) {
-      return "<p>No data found.</p>";
-    }
-
-    let html = "<table><thead><tr>";
-
-    // header
-    allowedColumns.forEach(col => {
-      html += `<th>${col}</th>`;
-    });
-    html += "</tr></thead><tbody>";
-
-    // rows
-    rows.forEach(row => {
-      html += "<tr>";
-      allowedColumns.forEach(col => {
-        html += `<td>${row[col] || ""}</td>`;
-      });
-      html += "</tr>";
-    });
-
-    html += "</tbody></table>";
-    return html;
-  }
+});
 </script>
 
 </body>
