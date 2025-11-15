@@ -77,13 +77,13 @@ function loadAndRenderTable() {
       });
 
       // Convert to HTML
-      const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows), { header:1 });
+      const html = buildHtmlTable(rows);
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = html;
       const table = tempDiv.querySelector("table");
       table.classList.add("table", "table-striped", "table-bordered", "table-hover");
 
-      document.getElementById("output").innerHTML = tempDiv.innerHTML;
+      document.getElementById("output").innerHTML = html;
 
       // Initialize DataTables
       $(document).ready(function(){
