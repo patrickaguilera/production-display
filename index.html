@@ -47,7 +47,8 @@ table { font-size: 1.5rem; }
 <script>
 const hiddenColumnIndexes = [7,8];  // example
 const checkColumnIndex = 5;
-const xlsxFileUrl = 'order_status_11122025_095944.xlsx'; // <-- replace with the path to your XLSX on GitHub Pages
+const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx'; // <-- replace with the path to your XLSX on GitHub Pages
+const refreshInterval = 5 * 60 * 1000; // 5 minutes
 
 function loadAndRenderTable() {
   fetch(xlsxFileUrl)
@@ -57,7 +58,7 @@ function loadAndRenderTable() {
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
-      
+
       // Remove rows if column 5 empty
       rows = rows.filter(row => {
         const value = row[checkColumnIndex];
@@ -68,12 +69,12 @@ function loadAndRenderTable() {
       rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
 
       // Ensure all rows have same column count as header
-      //const colCount = rows[0].length;
-     // rows = rows.map(row => {
-      //  const newRow = [...row];
-      //  while(newRow.length < colCount) newRow.push("");
-      //  return newRow;
-     // });
+      const colCount = rows[0].length;
+      rows = rows.map(row => {
+        const newRow = [...row];
+        while(newRow.length < colCount) newRow.push("");
+        return newRow;
+      });
 
       // Convert to HTML
       const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows), { header:1 });
@@ -101,6 +102,14 @@ function loadAndRenderTable() {
 
 // Initial load
 loadAndRenderTable();
+
+// Auto-refresh
+setInterval(() => {
+  if($.fn.DataTable.isDataTable('#output table')){
+    $('#output table').DataTable().destroy();
+  }
+  loadAndRenderTable();
+}, refreshInterval);
 
 // Adjust DataTables scroll on window resize
 window.addEventListener('resize', () => {
