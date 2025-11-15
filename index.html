@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <title>Production Dashboard TV</title>
 
-<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
-<!-- SheetJS -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
@@ -32,7 +29,7 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
       <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0"></iframe>
       <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0"></iframe>
     </div>
-    <h1>Production Dashboard</h1>
+    <h1>Medium Duty Production Dashboard</h1>
   </div>
 
   <div class="toggle-section">
@@ -53,33 +50,32 @@ const hiddenColumnIndexes = [2,3,7,8];
 const statusColumnIndex = 3;           
 const partColumnIndex = 4;             
 const checkColumnIndex = 5;            
-// Example GitHub Pages raw URL; replace username/repo/path with your repo info
-const xlsxFileUrl = './data/order_status_11122025_095944.xlsx';
+
+// Always load the XLSX from data/latest.xlsx in the repo
+const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx';
 
 let allRows = [];
 
-// Build HTML table
+// Build table with status coloring
 function buildHtmlTable(rows){
   if(rows.length === 0) return "<p>No data to display.</p>";
 
   const colCount = rows[0].length;
   let thead = '<thead><tr>';
-  for(let i = 0; i < colCount; i++){
-    thead += `<th>${rows[0][i]}</th>`;
-  }
+  for(let i=0;i<colCount;i++) thead += `<th>${rows[0][i]}</th>`;
   thead += '</tr></thead>';
 
   let tbody = '<tbody>';
-  for(let r = 1; r < rows.length; r++){
+  for(let r=1;r<rows.length;r++){
     tbody += '<tr>';
-    for(let c = 0; c < colCount; c++){
+    for(let c=0;c<colCount;c++){
       const cellValue = rows[r][c] !== undefined ? rows[r][c] : '';
       let color = '';
       if(c === statusColumnIndex){
         if(cellValue.toString().toUpperCase() === 'PAST DUE') color = 'red';
         else if(cellValue.toString().toUpperCase() === 'OKAY') color = 'green';
       }
-      tbody += `<td style="color: ${color}">${cellValue}</td>`;
+      tbody += `<td style="color:${color}">${cellValue}</td>`;
     }
     tbody += '</tr>';
   }
@@ -87,26 +83,24 @@ function buildHtmlTable(rows){
   return `<table>${thead}${tbody}</table>`;
 }
 
-// Duty type
+// Determine medium/light duty
 function getDutyType(partNumber){
   if(!partNumber) return 'light';
   const firstGroup = partNumber.split('-')[0].toUpperCase();
-  if(firstGroup.includes('M') || firstGroup.includes('CA') || firstGroup.includes('HRNS')){
-    return 'medium';
-  }
+  if(firstGroup.includes('M') || firstGroup.includes('CA') || firstGroup.includes('HRNS')) return 'medium';
   return 'light';
 }
 
-// Filter rows by duty type toggle
+// Filter rows
 function filterByDutyType(rows, type){
-  return rows.filter((row, idx) => {
-    if(idx === 0) return true; 
+  return rows.filter((row, idx)=>{
+    if(idx===0) return true;
     const partNumber = row[partColumnIndex];
-    return getDutyType(partNumber) === type;
+    return getDutyType(partNumber)===type;
   });
 }
 
-// Render filtered table
+// Render table
 function renderFilteredTable(){
   const toggleElement = document.getElementById('orderTypeToggle');
   const toggleValue = toggleElement.value;
@@ -118,45 +112,44 @@ function renderFilteredTable(){
 // Load XLSX
 function loadAndRenderTable(){
   fetch(xlsxFileUrl)
-    .then(res => {
+    .then(res=>{
       if(!res.ok) throw new Error("File not found or cannot be accessed.");
       return res.arrayBuffer();
     })
-    .then(data => {
-      const workbook = XLSX.read(data, { type: 'array' });
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
+    .then(data=>{
+      const workbook = XLSX.read(data,{type:'array'});
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      let rows = XLSX.utils.sheet_to_json(worksheet,{header:1});
 
       // Hide columns
-      rows = rows.map(row => row.filter((_, idx) => !hiddenColumnIndexes.includes(idx)));
+      rows = rows.map(row=>row.filter((_,idx)=>!hiddenColumnIndexes.includes(idx)));
 
       // Remove empty rows
-      rows = rows.filter(row => {
+      rows = rows.filter(row=>{
         const val = row[checkColumnIndex];
-        return val !== undefined && val !== null && val !== "";
+        return val!==undefined && val!==null && val!=='';
       });
 
       // Pad rows
       const colCount = rows[0].length;
-      rows = rows.map(row => {
+      rows = rows.map(row=>{
         const newRow = [...row];
-        while(newRow.length < colCount) newRow.push("");
+        while(newRow.length<colCount) newRow.push("");
         return newRow;
       });
 
       allRows = rows;
 
-      // Restore toggle from localStorage
+      // Restore toggle
       const toggleElement = document.getElementById('orderTypeToggle');
       const savedToggle = localStorage.getItem('orderTypeToggle');
       if(savedToggle) toggleElement.value = savedToggle;
 
       renderFilteredTable();
     })
-    .catch(err => {
+    .catch(err=>{
       console.error("Error loading XLSX:", err);
-      document.getElementById("output").innerHTML = `<p class="error-message">Error loading table. Please check the XLSX file URL.</p>`;
+      document.getElementById("output").innerHTML = `<p class="error-message">Error loading table. Make sure data/latest.xlsx exists in the repo.</p>`;
     });
 }
 
@@ -164,17 +157,16 @@ function loadAndRenderTable(){
 loadAndRenderTable();
 document.getElementById('orderTypeToggle').addEventListener('change', renderFilteredTable);
 
-// Auto-refresh at 8:00 AM daily
-function scheduleDailyRefresh(hour = 8, minute = 0){
+// Auto-refresh at 8:00 AM
+function scheduleDailyRefresh(hour=8, minute=0){
   const now = new Date();
   let next = new Date();
-  next.setHours(hour, minute, 0, 0);
-  if(now > next) next.setDate(next.getDate() + 1);
-  const timeout = next - now;
-  setTimeout(() => {
+  next.setHours(hour,minute,0,0);
+  if(now>next) next.setDate(next.getDate()+1);
+  setTimeout(()=>{
     loadAndRenderTable();
-    scheduleDailyRefresh(hour, minute);
-  }, timeout);
+    scheduleDailyRefresh(hour,minute);
+  }, next-now);
 }
 scheduleDailyRefresh();
 </script>
