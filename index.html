@@ -4,73 +4,9 @@
 <meta charset="UTF-8">
 <title>Production Dashboard</title>
 
+<link href="style.css" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<style>
-  body {
-    background-color: #121212;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0;
-    padding: 10px;
-  }
-
-  .table-section {
-    flex-grow: 1;
-    overflow: auto;                     /* scrolls if table grows too wide or tall */
-    border: 1px solid #333;
-    border-radius: 4px;
-  }
-
-  table {
-    font-size: 1.5rem;
-    border-collapse: collapse;
-    table-layout: auto;                 /* AUTO column width based on content */
-    width: auto;                        /* allow the table to grow naturally */
-    white-space: nowrap;                /* keep everything on one line */
-  }
-
-  thead th {
-    position: sticky;
-    top: 0;
-    background-color: #1e1e1e;
-    border-bottom: 2px solid #444;
-    z-index: 2;
-  }
-
-  th, td {
-    padding: 8px 12px;
-    border: 1px solid #444;
-    text-align: left;
-    white-space: nowrap;                /* prevent wrapping in cells */
-  }
-
-  .status-ok {
-    color: #00e676;                     /* green text */
-    font-weight: bold;
-  }
-
-  .status-pastdue {
-    color: #ff5252;                     /* red text */
-    font-weight: bold;
-  }
-
-  .controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  .error {
-    color: red;
-    font-size: 1.2rem;
-    text-align: center;
-  }
-</style>
 
 </head>
 <body>
