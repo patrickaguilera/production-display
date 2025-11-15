@@ -17,7 +17,7 @@ html, body { height: 100%; margin: 0; font-family: Arial, sans-serif; }
 .header-section h1 { font-size: 3rem; margin-bottom: 10px; }
 .clocks iframe { width: 100%; max-height: 120px; margin-bottom: 5px; }
 .table-section { flex: 1 1 auto; overflow-y: auto; }
-table { font-size: 1.5rem; width: 100%; border-collapse: collapse; table-layout: fixed; }
+table { font-size: 1.5rem; width: 100%; border-collapse: collapse; }
 th, td { border: 1px solid #333; padding: 6px; text-align: left; }
 thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
 </style>
@@ -39,7 +39,7 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
 </div>
 
 <script>
-const hiddenColumnIndexes = [7,8];  // columns to hide
+const hiddenColumnIndexes = [2,3,7,8];  // columns to hide
 const checkColumnIndex = 5;         // remove row if this column is empty
 const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx';
 
@@ -98,6 +98,7 @@ function loadAndRenderTable(){
         return newRow;
       });
 
+      // Build and render table
       document.getElementById("output").innerHTML = buildHtmlTable(rows);
     })
     .catch(err => {
