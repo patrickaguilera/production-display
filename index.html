@@ -24,6 +24,7 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
 <body>
 
 <div class="container-fluid">
+
   <div class="header-section">
     <div class="clocks mb-2">
       <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0"></iframe>
@@ -33,7 +34,7 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
   </div>
 
   <div class="toggle-section">
-    <label class="form-check-label me-2">Show Orders:</label>
+    <label>Show Orders:</label>
     <select id="orderTypeToggle" class="form-select w-auto d-inline-block">
       <option value="medium">Medium Duty</option>
       <option value="light">Light Duty</option>
@@ -46,127 +47,122 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
 </div>
 
 <script>
-const hiddenColumnIndexes = [2,3,7,8];  
-const statusColumnIndex = 3;           
-const partColumnIndex = 4;             
-const checkColumnIndex = 5;            
-
-// Always load the XLSX from data/latest.xlsx in the repo
-const xlsxFileUrl = 'data/latest.xlsx';
+const hiddenColumnIndexes = [2,3,7,8];     // columns to hide
+const statusColumnIndex = 3;                // color "PAST DUE" or "OKAY"
+const partColumnIndex = 4;                  // part number
+const checkColumnIndex = 5;                 // remove rows where this column is empty
+const xlsxFileUrl = "data/latest.xlsx";
 
 let allRows = [];
 
-// Build table with status coloring
+// Build HTML table
 function buildHtmlTable(rows){
   if(rows.length === 0) return "<p>No data to display.</p>";
 
   const colCount = rows[0].length;
-  let thead = '<thead><tr>';
-  for(let i=0;i<colCount;i++) thead += `<th>${rows[0][i]}</th>`;
-  thead += '</tr></thead>';
+  let thead = "<thead><tr>";
+  for (let i = 0; i < colCount; i++) thead += `<th>${rows[0][i]}</th>`;
+  thead += "</tr></thead>";
 
-  let tbody = '<tbody>';
-  for(let r=1;r<rows.length;r++){
-    tbody += '<tr>';
-    for(let c=0;c<colCount;c++){
-      const cellValue = rows[r][c] !== undefined ? rows[r][c] : '';
-      let color = '';
-      if(c === statusColumnIndex){
-        if(cellValue.toString().toUpperCase() === 'PAST DUE') color = 'red';
-        else if(cellValue.toString().toUpperCase() === 'OKAY') color = 'green';
+  let tbody = "<tbody>";
+  for (let r = 1; r < rows.length; r++){
+    tbody += "<tr>";
+    for (let c = 0; c < colCount; c++){
+      const cellValue = rows[r][c] || "";
+      let color = "";
+
+      if (c === statusColumnIndex){
+        if (cellValue.toUpperCase() === "PAST DUE") color = "red";
+        if (cellValue.toUpperCase() === "OKAY") color = "green";
       }
+
       tbody += `<td style="color:${color}">${cellValue}</td>`;
     }
-    tbody += '</tr>';
+    tbody += "</tr>";
   }
-  tbody += '</tbody>';
+  tbody += "</tbody>";
+
   return `<table>${thead}${tbody}</table>`;
 }
 
-// Determine medium/light duty
+// Determine Medium vs Light Duty
 function getDutyType(partNumber){
-  if(!partNumber) return 'light';
-  const firstGroup = partNumber.split('-')[0].toUpperCase();
-  if(firstGroup.includes('M') || firstGroup.includes('CA') || firstGroup.includes('HRNS')) return 'medium';
-  return 'light';
+  if (!partNumber) return "light";
+
+  const first = partNumber.split("-")[0].toUpperCase();
+
+  if (first.includes("M") || first.includes("CA") || first.includes("HRNS"))
+    return "medium";
+
+  return "light";
 }
 
-// Filter rows
-function filterByDutyType(rows, type){
-  return rows.filter((row, idx)=>{
-    if(idx===0) return true;
-    const partNumber = row[partColumnIndex];
-    return getDutyType(partNumber)===type;
+function filterByDuty(rows, type){
+  return rows.filter((row, idx) => {
+    if (idx === 0) return true;
+    return getDutyType(row[partColumnIndex]) === type;
   });
 }
 
-// Render table
-function renderFilteredTable(){
-  const toggleElement = document.getElementById('orderTypeToggle');
-  const toggleValue = toggleElement.value;
-  localStorage.setItem('orderTypeToggle', toggleValue);
-  const filteredRows = filterByDutyType(allRows, toggleValue);
-  document.getElementById("output").innerHTML = buildHtmlTable(filteredRows);
+function renderFiltered(){
+  const type = document.getElementById("orderTypeToggle").value;
+  localStorage.setItem("orderTypeToggle", type);
+  document.getElementById("output").innerHTML = buildHtmlTable(filterByDuty(allRows, type));
 }
 
 // Load XLSX
 function loadAndRenderTable(){
   fetch(xlsxFileUrl)
-    .then(res=>{
-      if(!res.ok) throw new Error("File not found or cannot be accessed.");
+    .then(res => {
+      if (!res.ok) throw new Error("File not found");
       return res.arrayBuffer();
     })
-    .then(data=>{
-      const workbook = XLSX.read(data,{type:'array'});
-      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-      let rows = XLSX.utils.sheet_to_json(worksheet,{header:1});
+    .then(data => {
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.SheetNames[0];
+      let rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheet], { header: 1 });
 
-      // Hide columns
-      rows = rows.map(row=>row.filter((_,idx)=>!hiddenColumnIndexes.includes(idx)));
+      rows = rows.map(row => row.filter((_, idx) => !hiddenColumnIndexes.includes(idx)));
 
-      // Remove empty rows
-      rows = rows.filter(row=>{
-        const val = row[checkColumnIndex];
-        return val!==undefined && val!==null && val!=='';
+      rows = rows.filter(row => {
+        const v = row[checkColumnIndex];
+        return v !== undefined && v !== null && v !== "";
       });
 
-      // Pad rows
       const colCount = rows[0].length;
-      rows = rows.map(row=>{
-        const newRow = [...row];
-        while(newRow.length<colCount) newRow.push("");
-        return newRow;
+      rows = rows.map(r => {
+        while (r.length < colCount) r.push("");
+        return r;
       });
 
       allRows = rows;
 
-      // Restore toggle
-      const toggleElement = document.getElementById('orderTypeToggle');
-      const savedToggle = localStorage.getItem('orderTypeToggle');
-      if(savedToggle) toggleElement.value = savedToggle;
+      const saved = localStorage.getItem("orderTypeToggle");
+      if (saved) document.getElementById("orderTypeToggle").value = saved;
 
-      renderFilteredTable();
+      renderFiltered();
     })
-    .catch(err=>{
-      console.error("Error loading XLSX:", err);
-      document.getElementById("output").innerHTML = `<p class="error-message">Error loading table. Make sure data/latest.xlsx exists in the repo.</p>`;
+    .catch(err => {
+      console.error(err);
+      document.getElementById("output").innerHTML =
+        `<p class="error-message">Error loading table.</p>`;
     });
 }
 
-// Initial load
 loadAndRenderTable();
-document.getElementById('orderTypeToggle').addEventListener('change', renderFilteredTable);
+document.getElementById("orderTypeToggle").addEventListener("change", renderFiltered);
 
-// Auto-refresh at 8:00 AM
-function scheduleDailyRefresh(hour=8, minute=0){
+// Auto-refresh daily @ 8 AM
+function scheduleDailyRefresh(hour = 8, minute = 0){
   const now = new Date();
   let next = new Date();
-  next.setHours(hour,minute,0,0);
-  if(now>next) next.setDate(next.getDate()+1);
-  setTimeout(()=>{
+  next.setHours(hour, minute, 0, 0);
+  if (now > next) next.setDate(next.getDate() + 1);
+
+  setTimeout(() => {
     loadAndRenderTable();
-    scheduleDailyRefresh(hour,minute);
-  }, next-now);
+    scheduleDailyRefresh(hour, minute);
+  }, next - now);
 }
 scheduleDailyRefresh();
 </script>
