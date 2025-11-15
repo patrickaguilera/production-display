@@ -19,117 +19,89 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: #f8f9fa;
-  font-family: Arial, sans-serif;
-}
-
-.container-fluid {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-}
-
-.header-section {
-  flex: 0 0 auto;
-  text-align: center;
-}
-
-.header-section h1 {
-  font-size: 3rem; /* large for TV */
-  margin-bottom: 10px;
-}
-
-.clocks iframe {
-  width: 100%;
-  max-height: 120px;
-  margin-bottom: 5px;
-}
-
-.table-section {
-  flex: 1 1 auto; /* takes remaining space */
-  overflow-y: auto;
-}
-
-table {
-  font-size: 1.5rem; /* readable on TV */
-}
+html, body { height: 100%; margin: 0; background-color: #f8f9fa; font-family: Arial, sans-serif; }
+.container-fluid { height: 100%; display: flex; flex-direction: column; padding: 10px; }
+.header-section { flex: 0 0 auto; text-align: center; }
+.header-section h1 { font-size: 3rem; margin-bottom: 10px; }
+.clocks iframe { width: 100%; max-height: 120px; margin-bottom: 5px; }
+.table-section { flex: 1 1 auto; overflow-y: auto; }
+table { font-size: 1.5rem; }
 </style>
 </head>
 <body>
 
 <div class="container-fluid">
-  <!-- Header + clocks -->
   <div class="header-section">
     <div class="clocks mb-2">
       <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0"></iframe>
       <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0"></iframe>
     </div>
     <h1>Medium Duty Production Dashboard</h1>
-    <input type="file" id="fileInput" class="form-control mb-2" accept=".xlsx">
   </div>
 
-  <!-- Table -->
   <div class="table-section">
     <div id="output"></div>
   </div>
 </div>
 
 <script>
-const hiddenColumnIndexes = [7, 8];  // example
+const hiddenColumnIndexes = [7,8];  // example
 const checkColumnIndex = 5;
+const xlsxFileUrl = 'yourfile.xlsx'; // <-- replace with the path to your XLSX on GitHub Pages
+const refreshInterval = 5 * 60 * 1000; // 5 minutes
 
-document.getElementById("fileInput").addEventListener("change", function(e){
-  const file = e.target.files[0];
-  if(!file) return;
+function loadAndRenderTable() {
+  fetch(xlsxFileUrl)
+    .then(res => res.arrayBuffer())
+    .then(data => {
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
 
-  const reader = new FileReader();
-  reader.onload = function(event){
-    const data = new Uint8Array(event.target.result);
-    const workbook = XLSX.read(data, { type: 'array' });
+      // Remove rows if column 5 empty
+      rows = rows.filter(row => {
+        const value = row[checkColumnIndex];
+        return value !== undefined && value !== null && value !== "";
+      });
 
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
+      // Hide unwanted columns
+      rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
 
-    let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
+      const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows));
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = html;
+      const table = tempDiv.querySelector("table");
+      table.classList.add("table", "table-striped", "table-bordered", "table-hover");
 
-    // Remove rows if column 5 empty
-    rows = rows.filter(row => {
-      const value = row[checkColumnIndex];
-      return value !== undefined && value !== null && value !== "";
-    });
+      document.getElementById("output").innerHTML = tempDiv.innerHTML;
 
-    // Hide unwanted columns
-    rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
-
-    // Convert to sheet → HTML
-    const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows));
-
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = html;
-    const table = tempDiv.querySelector("table");
-    table.classList.add("table", "table-striped", "table-bordered", "table-hover");
-
-    document.getElementById("output").innerHTML = tempDiv.innerHTML;
-
-    // Initialize DataTables
-    $(document).ready(function(){
-      $('#output table').DataTable({
-        paging: true,
-        searching: true,
-        info: false,
-        scrollY: $('.table-section').height() + "px",
-        scrollCollapse: true,
-        scrollX: false,
-        responsive: true
+      // Initialize DataTables
+      $(document).ready(function(){
+        $('#output table').DataTable({
+          paging: true,
+          searching: true,
+          info: false,
+          scrollY: $('.table-section').height() + "px",
+          scrollCollapse: true,
+          scrollX: false,
+          responsive: true
+        });
       });
     });
-  };
-  reader.readAsArrayBuffer(file);
-});
+}
+
+// Initial load
+loadAndRenderTable();
+
+// Auto-refresh
+setInterval(() => {
+  // Destroy existing DataTable if exists
+  if($.fn.DataTable.isDataTable('#output table')){
+    $('#output table').DataTable().destroy();
+  }
+  loadAndRenderTable();
+}, refreshInterval);
 
 // Adjust DataTables scroll on window resize
 window.addEventListener('resize', () => {
