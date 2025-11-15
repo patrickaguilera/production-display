@@ -47,8 +47,8 @@ table { font-size: 1.5rem; }
 <script>
 const hiddenColumnIndexes = [7,8];  // example
 const checkColumnIndex = 5;
-const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx'; // <-- replace with the path to your XLSX on GitHub Pages
-//const refreshInterval = 5 * 60 * 1000; // 5 minutes
+const xlsxFileUrl = 'order_status_11122025_095944.xlsx'; // <-- replace with the path to your XLSX on GitHub Pages
+const refreshInterval = 5 * 60 * 1000; // 5 minutes
 
 function loadAndRenderTable() {
   fetch(xlsxFileUrl)
@@ -67,16 +67,17 @@ function loadAndRenderTable() {
         const value = row[checkColumnIndex];
         return value !== undefined && value !== null && value !== "";
       });
-      
-      // Ensure all rows have same length as header
+
+      // Ensure all rows have same column count as header
       const colCount = rows[0].length;
       rows = rows.map(row => {
         const newRow = [...row];
-        while(newRow.length < colCount) newRow.push(""); // pad empty cells
+        while(newRow.length < colCount) newRow.push("");
         return newRow;
       });
 
-      const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows));
+      // Convert to HTML
+      const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows), { header:1 });
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = html;
       const table = tempDiv.querySelector("table");
@@ -104,7 +105,6 @@ loadAndRenderTable();
 
 // Auto-refresh
 setInterval(() => {
-  // Destroy existing DataTable if exists
   if($.fn.DataTable.isDataTable('#output table')){
     $('#output table').DataTable().destroy();
   }
