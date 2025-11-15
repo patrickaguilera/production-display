@@ -87,13 +87,12 @@ function buildHtmlTable(rows){
 
 // Determine Medium vs Light Duty
 function getDutyType(partNumber){
-  if (!partNumber) return "light";
-
-  const first = partNumber.split("-")[0].toUpperCase();
-
+  if (partNumber === undefined || partNumber === null) return "light";
+  let str = String(partNumber).trim().toUpperCase();
+  if (!str.includes("-")) return "light"; // invalid part#, treat as light
+  const first = str.split("-")[0];
   if (first.includes("M") || first.includes("CA") || first.includes("HRNS"))
     return "medium";
-
   return "light";
 }
 
