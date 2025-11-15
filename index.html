@@ -68,12 +68,12 @@ function loadAndRenderTable() {
       rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
 
       // Ensure all rows have same column count as header
-      const colCount = rows[0].length;
-      rows = rows.map(row => {
-        const newRow = [...row];
-        while(newRow.length < colCount) newRow.push("");
-        return newRow;
-      });
+      //const colCount = rows[0].length;
+     // rows = rows.map(row => {
+      //  const newRow = [...row];
+      //  while(newRow.length < colCount) newRow.push("");
+      //  return newRow;
+     // });
 
       // Convert to HTML
       const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows), { header:1 });
