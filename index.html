@@ -122,16 +122,6 @@ function scheduleDailyRefresh(hour = 8, minute = 0){
   }, timeout);
 }
 scheduleDailyRefresh();
-
-// Optional: adjust table-section height dynamically on resize
-function adjustTableHeight(){
-  const headerHeight = document.querySelector('.header-section').offsetHeight;
-  const containerHeight = document.querySelector('.container-fluid').offsetHeight;
-  const tableSection = document.querySelector('.table-section');
-  tableSection.style.height = (containerHeight - headerHeight) + 'px';
-}
-window.addEventListener('resize', adjustTableHeight);
-window.addEventListener('load', adjustTableHeight);
 </script>
 
 </body>
