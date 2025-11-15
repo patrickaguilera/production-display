@@ -25,7 +25,7 @@ html, body { height: 100%; margin: 0; background-color: #f8f9fa; font-family: Ar
 .header-section h1 { font-size: 3rem; margin-bottom: 10px; }
 .clocks iframe { width: 100%; max-height: 120px; margin-bottom: 5px; }
 .table-section { flex: 1 1 auto; overflow-y: auto; }
-table { font-size: 1.5rem; }
+table { font-size: 1.5rem; width: 100%; }
 </style>
 </head>
 <body>
@@ -45,12 +45,38 @@ table { font-size: 1.5rem; }
 </div>
 
 <script>
-const hiddenColumnIndexes = [7,8];  // example
-const checkColumnIndex = 5;
-const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx'; // <-- replace with the path to your XLSX on GitHub Pages
+const hiddenColumnIndexes = [7,8];  // columns to hide
+const checkColumnIndex = 5;         // remove row if this column is empty
+const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx'; // replace with path to your XLSX file
 const refreshInterval = 5 * 60 * 1000; // 5 minutes
 
-function loadAndRenderTable() {
+// Build HTML table manually
+function buildHtmlTable(rows){
+  const colCount = rows[0].length;
+
+  // Build thead
+  let thead = '<thead><tr>';
+  for(let i = 0; i < colCount; i++){
+    thead += `<th>${rows[0][i]}</th>`;
+  }
+  thead += '</tr></thead>';
+
+  // Build tbody
+  let tbody = '<tbody>';
+  for(let r = 1; r < rows.length; r++){
+    tbody += '<tr>';
+    for(let c = 0; c < colCount; c++){
+      tbody += `<td>${rows[r][c] !== undefined ? rows[r][c] : ''}</td>`;
+    }
+    tbody += '</tr>';
+  }
+  tbody += '</tbody>';
+
+  return `<table class="table table-striped table-bordered table-hover">${thead}${tbody}</table>`;
+}
+
+// Load and render XLSX
+function loadAndRenderTable(){
   fetch(xlsxFileUrl)
     .then(res => res.arrayBuffer())
     .then(data => {
@@ -59,16 +85,16 @@ function loadAndRenderTable() {
       const worksheet = workbook.Sheets[sheetName];
       let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
 
-      // Hide unwanted columns
-      rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
-      
       // Remove rows if column 5 empty
       rows = rows.filter(row => {
         const value = row[checkColumnIndex];
         return value !== undefined && value !== null && value !== "";
       });
 
-      // Ensure all rows have same column count as header
+      // Hide unwanted columns
+      rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
+
+      // Pad rows to match header
       const colCount = rows[0].length;
       rows = rows.map(row => {
         const newRow = [...row];
@@ -76,13 +102,8 @@ function loadAndRenderTable() {
         return newRow;
       });
 
-      // Convert to HTML
+      // Build HTML table manually
       const html = buildHtmlTable(rows);
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = html;
-      const table = tempDiv.querySelector("table");
-      table.classList.add("table", "table-striped", "table-bordered", "table-hover");
-
       document.getElementById("output").innerHTML = html;
 
       // Initialize DataTables
@@ -111,7 +132,7 @@ setInterval(() => {
   loadAndRenderTable();
 }, refreshInterval);
 
-// Adjust DataTables scroll on window resize
+// Adjust scroll on resize
 window.addEventListener('resize', () => {
   const dt = $('#output table').DataTable();
   if(dt){
