@@ -1,113 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Production Dashboard TV</title>
-
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
-<!-- SheetJS -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
-<style>
-html, body { height: 100%; margin: 0; background-color: #f8f9fa; font-family: Arial, sans-serif; }
-.container-fluid { height: 100%; display: flex; flex-direction: column; padding: 10px; }
-.header-section { flex: 0 0 auto; text-align: center; }
-.header-section h1 { font-size: 3rem; margin-bottom: 10px; }
-.clocks iframe { width: 100%; max-height: 120px; margin-bottom: 5px; }
-.table-section { flex: 1 1 auto; overflow-y: auto; }
-table { font-size: 1.5rem; width: 100%; border-collapse: collapse; }
-th, td { border: 1px solid #333; padding: 6px; text-align: left; }
-</style>
-</head>
-<body>
-
-<div class="container-fluid">
-  <div class="header-section">
-    <div class="clocks mb-2">
-      <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0"></iframe>
-      <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0"></iframe>
+  <head>
+    <meta charset="UTF-8">
+    <title>Production Dashboard TV</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    
+    <!-- SheetJS -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <style>
+    html, body { height: 100%; margin: 0; background-color: #f8f9fa; font-family: Arial, sans-serif; }
+    .container-fluid { height: 100%; display: flex; flex-direction: column; padding: 10px; }
+    .header-section { flex: 0 0 auto; text-align: center; }
+    .header-section h1 { font-size: 3rem; margin-bottom: 10px; }
+    .clocks iframe { width: 100%; max-height: 120px; margin-bottom: 5px; }
+    .table-section { flex: 1 1 auto; overflow-y: auto; }
+    table { font-size: 1.5rem; width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #333; padding: 6px; text-align: left; }
+    </style>
+  </head>
+  <body>
+  
+    <div class="container-fluid">
+      <div class="header-section">
+        <div class="clocks mb-2">
+          <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0"></iframe>
+          <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0"></iframe>
+        </div>
+        <h1>Medium Duty Production Dashboard</h1>
+      </div>
+    
+      <div class="table-section">
+        <div id="output"></div>
+      </div>
     </div>
-    <h1>Medium Duty Production Dashboard</h1>
-  </div>
-
-  <div class="table-section">
-    <div id="output"></div>
-  </div>
-</div>
-
-<script>
-const hiddenColumnIndexes = [7,8];  // columns to hide
-const checkColumnIndex = 5;         // remove row if this column is empty
-const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx'; // replace with path to your XLSX file
-
-// Build HTML table manually
-function buildHtmlTable(rows){
-  const colCount = rows[0].length;
-
-  // Build thead
-  let thead = '<thead><tr>';
-  for(let i = 0; i < colCount; i++){
-    thead += `<th>${rows[0][i]}</th>`;
-  }
-  thead += '</tr></thead>';
-
-  // Build tbody
-  let tbody = '<tbody>';
-  for(let r = 1; r < rows.length; r++){
-    tbody += '<tr>';
-    for(let c = 0; c < colCount; c++){
-      tbody += `<td>${rows[r][c] !== undefined ? rows[r][c] : ''}</td>`;
-    }
-    tbody += '</tr>';
-  }
-  tbody += '</tbody>';
-
-  return `<table>${thead}${tbody}</table>`;
-}
-
-// Load and render XLSX
-function loadAndRenderTable(){
-  fetch(xlsxFileUrl)
-    .then(res => res.arrayBuffer())
-    .then(data => {
-      const workbook = XLSX.read(data, { type: 'array' });
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
-
-      // Hide unwanted columns
-      rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
-      
-      // Remove rows if column 5 empty
-      rows = rows.filter(row => {
-        const value = row[checkColumnIndex];
-        return value !== undefined && value !== null && value !== "";
-      });
-
-      // If no rows remain, display message
-      if(rows.length === 0){
-        document.getElementById("output").innerHTML = "<p>No data to display.</p>";
-        return;
-      }
-
-      // Pad rows to match header
+    
+    <script>
+    const hiddenColumnIndexes = [7,8];  // columns to hide
+    const checkColumnIndex = 5;         // remove row if this column is empty
+    const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx'; // replace with path to your XLSX file
+    
+    // Build HTML table manually
+    function buildHtmlTable(rows){
       const colCount = rows[0].length;
-      rows = rows.map(row => {
-        const newRow = [...row];
-        while(newRow.length < colCount) newRow.push("");
-        return newRow;
-      });
+    
+      // Build thead
+      let thead = '<thead><tr>';
+      for(let i = 0; i < colCount; i++){
+        thead += `<th>${rows[0][i]}</th>`;
+      }
+      thead += '</tr></thead>';
+    
+      // Build tbody
+      let tbody = '<tbody>';
+      for(let r = 1; r < rows.length; r++){
+        tbody += '<tr>';
+        for(let c = 0; c < colCount; c++){
+          tbody += `<td>${rows[r][c] !== undefined ? rows[r][c] : ''}</td>`;
+        }
+        tbody += '</tr>';
+      }
+      tbody += '</tbody>';
+    
+      return `<table>${thead}${tbody}</table>`;
+    }
+    
+    // Load and render XLSX
+    function loadAndRenderTable(){
+      fetch(xlsxFileUrl)
+        .then(res => res.arrayBuffer())
+        .then(data => {
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
 
-      // Build HTML table
-      const html = buildHtmlTable(rows);
-      document.getElementById("output").innerHTML = html;
-    });
-}
+          // Hide unwanted columns
+          rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
+          
+          // Remove rows if column 5 empty
+          rows = rows.filter(row => {
+            const value = row[checkColumnIndex];
+            return value !== undefined && value !== null && value !== "";
+          });
+        
+          // If no rows remain, display message
+          if(rows.length === 0){
+            document.getElementById("output").innerHTML = "<p>No data to display.</p>";
+            return;
+          }
+    
+          // Pad rows to match header
+          const colCount = rows[0].length;
+          rows = rows.map(row => {
+            const newRow = [...row];
+            while(newRow.length < colCount) newRow.push("");
+            return newRow;
+          });
+    
+          // Build HTML table
+          const html = buildHtmlTable(rows);
+          document.getElementById("output").innerHTML = html;
+    
+          // Initialize DataTables AFTER table exists
+          const table = document.querySelector("#output table");
+          $(table).DataTable({
+            paging: true,
+            searching: true,
+            info: false,
+            scrollY: $('.table-section').height() + "px",
+            scrollCollapse: true,
+            scrollX: false,
+            responsive: true
+          });
+        });
+    }
 
-// Initial load
-loadAndRenderTable();
-
-</body>
+    
+    // Initial load
+    loadAndRenderTable();
+  
+  </body>
 </html>
