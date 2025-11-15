@@ -1,92 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>XLSX Hard-Coded Column Filter</title>
+  <meta charset="UTF-8" />
+  <title>XLSX to HTML Table</title>
+
+  <!-- SheetJS browser build -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
   <style>
-    table, th, td {
-      border: 1px solid #333;
+    table {
       border-collapse: collapse;
-      padding: 4px;
+      margin-top: 20px;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #888;
+      padding: 6px 10px;
+      text-align: left;
+    }
+    th {
+      background: #f0f0f0;
     }
   </style>
 </head>
+
 <body>
 
-<h2>Upload XLSX File</h2>
-<input type="file" id="fileInput" accept=".xlsx" />
+<h2>Select Excel File</h2>
+<input type="file" id="fileInput" accept=".xlsx,.xls" />
 
-<h3>Filtered Output</h3>
 <div id="output"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
 <script>
-const XLSX = require("xlsx");
-const fs = require("fs");
+  // Allowed columns (hard-coded)
+  const allowedColumns = ["Name", "ORDER#", "ORDER DATE", "REQD DATE", "STATUS", "PART#", "QTY.", "DESCRIPTION", "COMMENTS"]; // change as needed
 
-// --------------------------------------------------
-// 1. CONFIG — only show these columns
-// --------------------------------------------------
-const allowedColumns = ["Name", "ORDER#", "ORDER DATE", "REQD DATE", "STATUS", "PART#", "QTY.", "DESCRIPTION", "COMMENTS"];  
-// Replace with your column headers
+  document.getElementById("fileInput").addEventListener("change", handleFile, false);
 
-// --------------------------------------------------
-// 2. LOAD WORKBOOK
-// --------------------------------------------------
-const workbook = XLSX.readFile("data/data.xlsx");
-const sheetName = workbook.SheetNames[0];
-const sheet = workbook.Sheets[sheetName];
+  function handleFile(evt) {
+    const file = evt.target.files[0];
+    const reader = new FileReader();
 
-// Convert entire sheet to JSON (array of row objects)
-const data = XLSX.utils.sheet_to_json(sheet);
+    reader.onload = function(e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
 
-// --------------------------------------------------
-// 3. FILTER COLUMNS
-// --------------------------------------------------
-const filteredData = data.map(row => {
-  let filteredRow = {};
-  for (const col of allowedColumns) {
-    filteredRow[col] = row[col] ?? ""; // ensure missing columns don't break HTML
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+
+      const rows = XLSX.utils.sheet_to_json(sheet);
+      const filtered = rows.map(row => {
+        let newRow = {};
+        allowedColumns.forEach(col => newRow[col] = row[col] || "");
+        return newRow;
+      });
+
+      document.getElementById("output").innerHTML = buildTable(filtered);
+    };
+
+    reader.readAsArrayBuffer(file);
   }
-  return filteredRow;
-});
 
-// --------------------------------------------------
-// 4. BUILD HTML TABLE
-// --------------------------------------------------
-function buildHtmlTable(rows) {
-  let html = `<table border="1" cellspacing="0" cellpadding="5">\n`;
-
-  // Header
-  html += "  <tr>\n";
-  for (const col of allowedColumns) {
-    html += `    <th>${col}</th>\n`;
-  }
-  html += "  </tr>\n";
-
-  // Body rows
-  rows.forEach(row => {
-    html += "  <tr>\n";
-    for (const col of allowedColumns) {
-      html += `    <td>${row[col] || ""}</td>\n`;
+  function buildTable(rows) {
+    if (!rows.length) {
+      return "<p>No data found.</p>";
     }
-    html += "  </tr>\n";
-  });
 
-  html += "</table>\n";
-  return html;
-}
+    let html = "<table><thead><tr>";
 
-const htmlTable = buildHtmlTable(filteredData);
+    // header
+    allowedColumns.forEach(col => {
+      html += `<th>${col}</th>`;
+    });
+    html += "</tr></thead><tbody>";
 
-// --------------------------------------------------
-// 5. WRITE OUTPUT FILE
-// --------------------------------------------------
-fs.writeFileSync("output.html", htmlTable, "utf8");
+    // rows
+    rows.forEach(row => {
+      html += "<tr>";
+      allowedColumns.forEach(col => {
+        html += `<td>${row[col] || ""}</td>`;
+      });
+      html += "</tr>";
+    });
 
-console.log("HTML table created: output.html");
-
+    html += "</tbody></table>";
+    return html;
+  }
 </script>
 
 </body>
