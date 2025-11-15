@@ -1,149 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Medium Duty Production Display</title>
+<meta charset="UTF-8">
+<title>Production Dashboard TV</title>
 
-  <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
-  <!-- DataTables CSS -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
-  />
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"/>
 
-  <!-- Optional Bootstrap JS -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-  ></script>
+<!-- jQuery and DataTables -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-  <!-- jQuery (required for DataTables) -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- SheetJS -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-  <!-- DataTables JS -->
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+}
 
-  <!-- SheetJS -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+.container-fluid {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
 
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; height: 100vh; }
-    iframe { margin-bottom: 15px; }
-    html, body { height: 100%; }
-    .table-container {
-      overflow-y: auto;
-    }
-  </style>
+.header-section {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.header-section h1 {
+  font-size: 3rem; /* large for TV */
+  margin-bottom: 10px;
+}
+
+.clocks iframe {
+  width: 100%;
+  max-height: 120px;
+  margin-bottom: 5px;
+}
+
+.table-section {
+  flex: 1 1 auto; /* takes remaining space */
+  overflow-y: auto;
+}
+
+table {
+  font-size: 1.5rem; /* readable on TV */
+}
+</style>
 </head>
 <body>
-  <div class="container d-flex flex-column h-100">
-    <!-- Clocks / Widgets -->
-    <div class="mb-3">
-      <script src="https://cdn.logwork.com/widget/text.js"></script>
-      <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0" width="100%" height="100"></iframe>
-      <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0" width="100%" height="200"></iframe>
-    </div>
 
-    <h1 class="mb-4">Medium Duty Production Display</h1>
-
-    <!-- File Upload -->
-    <div class="mb-3">
-      <input type="file" class="form-control" id="fileInput" accept=".xlsx" />
+<div class="container-fluid">
+  <!-- Header + clocks -->
+  <div class="header-section">
+    <div class="clocks mb-2">
+      <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs72/ftb/pa10/tt1/tm1" frameborder="0"></iframe>
+      <iframe src="https://free.timeanddate.com/clock/ia4vsg4z/n250/tlca/fs132/ftb/" frameborder="0"></iframe>
     </div>
-
-    <!-- Table Container -->
-    <div class="table-container flex-grow-1">
-      <div id="output"></div>
-    </div>
+    <h1>Medium Duty Production Dashboard</h1>
+    <input type="file" id="fileInput" class="form-control mb-2" accept=".xlsx">
   </div>
 
-  <script>
-    // COLUMNS TO HIDE (zero-based index)
-    const hiddenColumnIndexes = [7, 8];  // example
-    // COLUMN to check for emptiness (zero-based index)
-    const checkColumnIndex = 5;
+  <!-- Table -->
+  <div class="table-section">
+    <div id="output"></div>
+  </div>
+</div>
 
-    document.getElementById("fileInput").addEventListener("change", function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
+<script>
+const hiddenColumnIndexes = [7, 8];  // example
+const checkColumnIndex = 5;
 
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const data = new Uint8Array(event.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
+document.getElementById("fileInput").addEventListener("change", function(e){
+  const file = e.target.files[0];
+  if(!file) return;
 
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
+  const reader = new FileReader();
+  reader.onload = function(event){
+    const data = new Uint8Array(event.target.result);
+    const workbook = XLSX.read(data, { type: 'array' });
 
-        let rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
 
-        // --- STEP 1: Remove rows if column 5 is empty ---
-        rows = rows.filter(row => {
-          const value = row[checkColumnIndex];
-          return value !== undefined && value !== null && value !== "";
-        });
+    let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
 
-        // --- STEP 2: Hide unwanted columns ---
-        rows = rows.map(row =>
-          row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex))
-        );
-
-        // Convert to sheet → HTML
-        const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows));
-
-        // Add Bootstrap table classes
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = html;
-        const table = tempDiv.querySelector("table");
-        table.classList.add("table", "table-striped", "table-bordered", "table-hover");
-
-        document.getElementById("output").innerHTML = tempDiv.innerHTML;
-
-        // Calculate available height for vertical scroll dynamically
-        const container = document.querySelector('.table-container');
-        const headerHeight = document.querySelector('h1').offsetHeight;
-        const clocksHeight = Array.from(document.querySelectorAll('iframe')).reduce((sum, iframe) => sum + iframe.offsetHeight, 0);
-        const inputHeight = document.querySelector('#fileInput').offsetHeight;
-        const padding = 80; // extra spacing
-        const availableHeight = window.innerHeight - (headerHeight + clocksHeight + inputHeight + padding);
-        container.style.maxHeight = availableHeight + "px";
-
-        // Initialize DataTables with vertical scroll
-        $(document).ready(function() {
-          $('#output table').DataTable({
-            paging: true,
-            searching: true,
-            info: false,
-            scrollY: availableHeight + "px", 
-            scrollCollapse: true,
-            scrollX: false,
-            responsive: true
-          });
-        });
-      };
-
-      reader.readAsArrayBuffer(file);
+    // Remove rows if column 5 empty
+    rows = rows.filter(row => {
+      const value = row[checkColumnIndex];
+      return value !== undefined && value !== null && value !== "";
     });
 
-    // Adjust table height on window resize
-    window.addEventListener('resize', () => {
-      const container = document.querySelector('.table-container');
-      const headerHeight = document.querySelector('h1').offsetHeight;
-      const clocksHeight = Array.from(document.querySelectorAll('iframe')).reduce((sum, iframe) => sum + iframe.offsetHeight, 0);
-      const inputHeight = document.querySelector('#fileInput').offsetHeight;
-      const padding = 80;
-      const availableHeight = window.innerHeight - (headerHeight + clocksHeight + inputHeight + padding);
-      container.style.maxHeight = availableHeight + "px";
-      // Update DataTables scroll
-      const dt = $('#output table').DataTable();
-      dt.settings()[0].oScroll.sY = availableHeight + "px";
-      dt.draw(false);
+    // Hide unwanted columns
+    rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
+
+    // Convert to sheet → HTML
+    const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows));
+
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    const table = tempDiv.querySelector("table");
+    table.classList.add("table", "table-striped", "table-bordered", "table-hover");
+
+    document.getElementById("output").innerHTML = tempDiv.innerHTML;
+
+    // Initialize DataTables
+    $(document).ready(function(){
+      $('#output table').DataTable({
+        paging: true,
+        searching: true,
+        info: false,
+        scrollY: $('.table-section').height() + "px",
+        scrollCollapse: true,
+        scrollX: false,
+        responsive: true
+      });
     });
-  </script>
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+// Adjust DataTables scroll on window resize
+window.addEventListener('resize', () => {
+  const dt = $('#output table').DataTable();
+  if(dt){
+    dt.settings()[0].oScroll.sY = $('.table-section').height() + "px";
+    dt.draw(false);
+  }
+});
+</script>
+
 </body>
 </html>
