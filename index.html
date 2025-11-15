@@ -32,17 +32,16 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
+    body { font-family: Arial, sans-serif; margin: 20px; height: 100vh; }
     iframe { margin-bottom: 15px; }
-    /* Set table container to have vertical scroll */
+    html, body { height: 100%; }
     .table-container {
-      max-height: 500px; /* Adjust as needed */
       overflow-y: auto;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container d-flex flex-column h-100">
     <!-- Clocks / Widgets -->
     <div class="mb-3">
       <script src="https://cdn.logwork.com/widget/text.js"></script>
@@ -58,7 +57,7 @@
     </div>
 
     <!-- Table Container -->
-    <div class="table-container">
+    <div class="table-container flex-grow-1">
       <div id="output"></div>
     </div>
   </div>
@@ -105,21 +104,45 @@
 
         document.getElementById("output").innerHTML = tempDiv.innerHTML;
 
+        // Calculate available height for vertical scroll dynamically
+        const container = document.querySelector('.table-container');
+        const headerHeight = document.querySelector('h1').offsetHeight;
+        const clocksHeight = Array.from(document.querySelectorAll('iframe')).reduce((sum, iframe) => sum + iframe.offsetHeight, 0);
+        const inputHeight = document.querySelector('#fileInput').offsetHeight;
+        const padding = 80; // extra spacing
+        const availableHeight = window.innerHeight - (headerHeight + clocksHeight + inputHeight + padding);
+        container.style.maxHeight = availableHeight + "px";
+
         // Initialize DataTables with vertical scroll
         $(document).ready(function() {
           $('#output table').DataTable({
             paging: true,
             searching: true,
             info: false,
-            scrollY: "400px",  // vertical scroll height
+            scrollY: availableHeight + "px", 
             scrollCollapse: true,
-            scrollX: false,    // horizontal scroll disabled
+            scrollX: false,
             responsive: true
           });
         });
       };
 
       reader.readAsArrayBuffer(file);
+    });
+
+    // Adjust table height on window resize
+    window.addEventListener('resize', () => {
+      const container = document.querySelector('.table-container');
+      const headerHeight = document.querySelector('h1').offsetHeight;
+      const clocksHeight = Array.from(document.querySelectorAll('iframe')).reduce((sum, iframe) => sum + iframe.offsetHeight, 0);
+      const inputHeight = document.querySelector('#fileInput').offsetHeight;
+      const padding = 80;
+      const availableHeight = window.innerHeight - (headerHeight + clocksHeight + inputHeight + padding);
+      container.style.maxHeight = availableHeight + "px";
+      // Update DataTables scroll
+      const dt = $('#output table').DataTable();
+      dt.settings()[0].oScroll.sY = availableHeight + "px";
+      dt.draw(false);
     });
   </script>
 </body>
