@@ -12,19 +12,19 @@
 </head>
 <body>
 
-<h2>Convert XLSX to HTML Table (Hide Columns by Index)</h2>
+<h2>XLSX → HTML (Hide Columns + Remove Rows If Column 5 Is Empty)</h2>
 
 <input type="file" id="fileInput" accept=".xlsx" />
 <div id="output"></div>
 
 <script>
 
-// HIDE COLUMNS BY ZERO-BASED INDEX
-const hiddenColumnIndexes = [7, 8]; 
+// COLUMNS TO HIDE (zero-based index)
+const hiddenColumnIndexes = [7, 8];  // example
 
 // COLUMN to check for emptiness (zero-based index)
 const checkColumnIndex = 5;
-  
+
 document.getElementById("fileInput").addEventListener("change", function(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -37,13 +37,12 @@ document.getElementById("fileInput").addEventListener("change", function(e) {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
 
-        // Convert sheet → array-of-arrays
-        let json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        let rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-        // --- STEP 1: Remove columns by index
-        json = json.map(row => row.filter((_, colIndex) =>
-            !hiddenColumnIndexes.includes(colIndex)
-        ));
+        // --- STEP 1: Hide unwanted columns ---
+        rows = rows.map(row =>
+            row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex))
+        );
 
         // --- STEP 2: Remove rows only if checkColumnIndex is empty ---
         rows = rows.filter(row => {
@@ -51,9 +50,8 @@ document.getElementById("fileInput").addEventListener("change", function(e) {
             return value !== undefined && value !== null && value !== "";
         });
 
-        // Convert to HTML
         const html = XLSX.utils.sheet_to_html(
-            XLSX.utils.aoa_to_sheet(json)
+            XLSX.utils.aoa_to_sheet(rows)
         );
 
         document.getElementById("output").innerHTML = html;
