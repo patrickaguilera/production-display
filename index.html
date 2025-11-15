@@ -85,14 +85,14 @@ function loadAndRenderTable(){
       const worksheet = workbook.Sheets[sheetName];
       let rows = XLSX.utils.sheet_to_json(worksheet, { header:1 });
 
+      // Hide unwanted columns
+      rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
+
       // Remove rows if column 5 empty
       rows = rows.filter(row => {
         const value = row[checkColumnIndex];
         return value !== undefined && value !== null && value !== "";
       });
-
-      // Hide unwanted columns
-      rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
 
       // If no rows remain, display message
       if(rows.length === 0){
