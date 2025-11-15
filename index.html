@@ -2,15 +2,12 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Select Rows & Columns</title>
+  <title>XLSX Hard-Coded Column Filter</title>
   <style>
     table, th, td {
       border: 1px solid #333;
       border-collapse: collapse;
       padding: 4px;
-    }
-    #preview table {
-      margin-top: 20px;
     }
   </style>
 </head>
@@ -19,28 +16,20 @@
 <h2>Upload XLSX File</h2>
 <input type="file" id="fileInput" accept=".xlsx" />
 
-<h3>Select Columns</h3>
-<div id="columnSelector"></div>
-
-<h3>Select Rows</h3>
-<div>
-  From: <input type="number" id="rowStart" min="1" value="1">
-  To: <input type="number" id="rowEnd" min="1" value="1">
-</div>
-
-<button id="generateBtn">Generate Filtered Table</button>
-
-<h3>Preview (full sheet)</h3>
-<div id="preview"></div>
-
 <h3>Filtered Output</h3>
 <div id="output"></div>
 
-<!-- SheetJS -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <script>
-let sheetData = [];  // Parsed array-of-arrays data
+/* -----------------------------------------
+   HARD-CODED COLUMN SELECTION
+   - Set column indexes you want to keep
+   - A=0, B=1, C=2, D=3, ...
+----------------------------------------- */
+const COLUMNS_TO_KEEP = [0, 1, 2, 3, 4, 5, 6, 9, 10]; 
+
+let sheetData = [];
 
 document.getElementById("fileInput").addEventListener("change", function (e) {
     const file = e.target.files[0];
@@ -53,73 +42,22 @@ document.getElementById("fileInput").addEventListener("change", function (e) {
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
 
-        // Convert sheet → array of arrays
+        // Convert sheet to array of arrays
         sheetData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-        renderPreviewTable(sheetData);
-        createColumnSelector(sheetData);
-        setupRowRange(sheetData.length);
+        generateFilteredTable();
     };
 
     reader.readAsBinaryString(file);
 });
 
-// --- Build full preview table ---
-function renderPreviewTable(data) {
-    let html = "<table>";
-    data.forEach(row => {
-        html += "<tr>";
-        row.forEach(cell => {
-            html += `<td>${cell !== undefined ? cell : ""}</td>`;
-        });
-        html += "</tr>";
-    });
-    html += "</table>";
-    document.getElementById("preview").innerHTML = html;
-}
-
-// --- Create column checkboxes ---
-function createColumnSelector(data) {
-    const maxColumns = Math.max(...data.map(r => r.length));
-    let html = "";
-
-    for (let c = 0; c < maxColumns; c++) {
-        html += `
-            <label>
-                <input type="checkbox" class="colCheckbox" value="${c}" checked>
-                Column ${c + 1}
-            </label>
-            &nbsp;
-        `;
-    }
-    document.getElementById("columnSelector").innerHTML = html;
-}
-
-// --- Populate row start/end limits ---
-function setupRowRange(totalRows) {
-    document.getElementById("rowStart").value = 1;
-    document.getElementById("rowEnd").value = totalRows;
-    document.getElementById("rowEnd").max = totalRows;
-}
-
-// --- Generate filtered HTML ---
-document.getElementById("generateBtn").addEventListener("click", function () {
-    const checkboxes = document.querySelectorAll(".colCheckbox:checked");
-    const columns = Array.from(checkboxes).map(cb => Number(cb.value));
-
-    const rowStart = Number(document.getElementById("rowStart").value) - 1; // to 0-index
-    const rowEnd = Number(document.getElementById("rowEnd").value) - 1;
-
-    let filtered = [];
-
-    for (let r = rowStart; r <= rowEnd; r++) {
-        if (!sheetData[r]) continue;
-        let newRow = columns.map(c => sheetData[r][c]);
-        filtered.push(newRow);
-    }
+function generateFilteredTable() {
+    let filtered = sheetData.map(row =>
+        COLUMNS_TO_KEEP.map(c => row[c])
+    );
 
     renderFilteredTable(filtered);
-});
+}
 
 function renderFilteredTable(data) {
     let html = "<table>";
