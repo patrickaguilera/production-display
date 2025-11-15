@@ -12,12 +12,36 @@
 </head>
 <body>
 
-<h2>Convert XLSX to HTML Table</h2>
+<h2>Convert XLSX to HTML Table (Filtered)</h2>
 
 <input type="file" id="fileInput" accept=".xlsx" />
 <div id="output"></div>
 
 <script>
+
+// ❗ ENTER COLUMNS TO HIDE HERE
+// You can use header names or Excel columns:
+const hiddenColumns = ["H", "I"];
+
+function filterData(jsonData) {
+    if (jsonData.length === 0) return jsonData;
+
+    const firstRow = jsonData[0];
+    const keys = Object.keys(firstRow);
+
+    // Determine which keys should be removed
+    const keysToRemove = keys.filter(k =>
+        hiddenColumns.includes(k) ||
+        hiddenColumns.includes(XLSX.utils.encode_col(keys.indexOf(k)))
+    );
+
+    // Remove them from each row
+    return jsonData.map(row => {
+        keysToRemove.forEach(col => delete row[col]);
+        return row;
+    });
+}
+
 document.getElementById("fileInput").addEventListener("change", function(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -27,14 +51,29 @@ document.getElementById("fileInput").addEventListener("change", function(e) {
         const data = new Uint8Array(event.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
 
-        // Use the first sheet
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
 
-        // Convert sheet to HTML
-        const html = XLSX.utils.sheet_to_html(worksheet);
+        // Convert worksheet → JSON
+        let json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-        // Display in the page
+        // Filter columns by index
+        const headerRow = json[0];
+
+        // Determine which column indices should be removed
+        const removeIndexes = headerRow.map((header, i) =>
+            hiddenColumns.includes(header) ||
+            hiddenColumns.includes(XLSX.utils.encode_col(i))
+        );
+
+        // Remove those columns from each row
+        json = json.map(row => row.filter((col, i) => !removeIndexes[i]));
+
+        // Convert JSON → HTML table
+        const html = XLSX.utils.sheet_to_html(
+            XLSX.utils.aoa_to_sheet(json)
+        );
+
         document.getElementById("output").innerHTML = html;
     };
     reader.readAsArrayBuffer(file);
