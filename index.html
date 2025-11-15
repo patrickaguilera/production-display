@@ -1,78 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>XLSX Hard-Coded Column Filter</title>
-  <style>
-    table, th, td {
-      border: 1px solid #333;
-      border-collapse: collapse;
-      padding: 4px;
-    }
-  </style>
-</head>
-<body>
+const XLSX = require("xlsx");
+const fs = require("fs");
 
-<h2>Upload XLSX File</h2>
-<input type="file" id="fileInput" accept=".xlsx" />
+// --------------------------------------------------
+// 1. CONFIG — only show these columns
+// --------------------------------------------------
+const allowedColumns = ["Name", "Age", "Email"];  
+// Replace with your column headers
 
-<h3>Filtered Output</h3>
-<div id="output"></div>
+// --------------------------------------------------
+// 2. LOAD WORKBOOK
+// --------------------------------------------------
+const workbook = XLSX.readFile("input.xlsx");
+const sheetName = workbook.SheetNames[0];
+const sheet = workbook.Sheets[sheetName];
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+// Convert entire sheet to JSON (array of row objects)
+const data = XLSX.utils.sheet_to_json(sheet);
 
-<script>
-/* -----------------------------------------
-   HARD-CODED COLUMN SELECTION
-   - Set column indexes you want to keep
-   - A=0, B=1, C=2, D=3, ...
------------------------------------------ */
-const COLUMNS_TO_KEEP = [0, 1, 2, 3, 4, 5, 6, 9, 10]; 
-
-let sheetData = [];
-
-document.getElementById("fileInput").addEventListener("change", function (e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function (evt) {
-        const data = evt.target.result;
-        const workbook = XLSX.read(data, { type: "binary" });
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-
-        // Convert sheet to array of arrays
-        sheetData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-        generateFilteredTable();
-    };
-
-    reader.readAsBinaryString(file);
+// --------------------------------------------------
+// 3. FILTER COLUMNS
+// --------------------------------------------------
+const filteredData = data.map(row => {
+  let filteredRow = {};
+  for (const col of allowedColumns) {
+    filteredRow[col] = row[col] ?? ""; // ensure missing columns don't break HTML
+  }
+  return filteredRow;
 });
 
-function generateFilteredTable() {
-    let filtered = sheetData.map(row =>
-        COLUMNS_TO_KEEP.map(c => row[c])
-    );
+// --------------------------------------------------
+// 4. BUILD HTML TABLE
+// --------------------------------------------------
+function buildHtmlTable(rows) {
+  let html = `<table border="1" cellspacing="0" cellpadding="5">\n`;
 
-    renderFilteredTable(filtered);
+  // Header
+  html += "  <tr>\n";
+  for (const col of allowedColumns) {
+    html += `    <th>${col}</th>\n`;
+  }
+  html += "  </tr>\n";
+
+  // Body rows
+  rows.forEach(row => {
+    html += "  <tr>\n";
+    for (const col of allowedColumns) {
+      html += `    <td>${row[col] || ""}</td>\n`;
+    }
+    html += "  </tr>\n";
+  });
+
+  html += "</table>\n";
+  return html;
 }
 
-function renderFilteredTable(data) {
-    let html = "<table>";
-    data.forEach(row => {
-        html += "<tr>";
-        row.forEach(cell => {
-            html += `<td>${cell !== undefined ? cell : ""}</td>`;
-        });
-        html += "</tr>";
-    });
-    html += "</table>";
+const htmlTable = buildHtmlTable(filteredData);
 
-    document.getElementById("output").innerHTML = html;
-}
-</script>
+// --------------------------------------------------
+// 5. WRITE OUTPUT FILE
+// --------------------------------------------------
+fs.writeFileSync("output.html", htmlTable, "utf8");
 
-</body>
-</html>
+console.log("HTML table created: output.html");
