@@ -66,16 +66,16 @@
 
           let rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-          // --- STEP 1: Remove rows if column 5 is empty ---
+          // --- STEP 1: Hide unwanted columns ---
+          rows = rows.map(row =>
+            row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex))
+          );
+
+          // --- STEP 2: Remove rows if column 5 is empty ---
           rows = rows.filter(row => {
             const value = row[checkColumnIndex];
             return value !== undefined && value !== null && value !== "";
           });
-
-          // --- STEP 2: Hide unwanted columns ---
-          rows = rows.map(row =>
-            row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex))
-          );
 
           // Convert to sheet → HTML
           const html = XLSX.utils.sheet_to_html(XLSX.utils.aoa_to_sheet(rows));
