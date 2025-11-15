@@ -1,63 +1,98 @@
-body {
-  background-color: #121212;
-  color: #ffffff;
+/* Page base */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #f8f9fa; /* original light bg */
   font-family: Arial, sans-serif;
+  color: #000;
+}
+
+/* Main container (keeps your existing structure) */
+.container-fluid {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  margin: 0;
   padding: 10px;
 }
 
-.table-section {
-  flex-grow: 1;
-  overflow: auto;                     /* scrolls if table grows too wide or tall */
-  border: 1px solid #333;
-  border-radius: 4px;
+/* Header / clocks */
+.header-section {
+  flex: 0 0 auto;
+  text-align: center;
+}
+.header-section h1 {
+  font-size: 2.4rem; /* slightly smaller to fit the select inside */
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
+/* Keep iframes sized and stacked as before */
+.clocks iframe {
+  width: 100%;
+  max-height: 120px;
+  margin-bottom: 5px;
+  border: 0;
+}
+
+/* Toggle inside the header: keep select sized reasonably */
+#orderTypeToggle {
+  display: inline-block;
+  vertical-align: middle;
+  width: 220px;
+}
+
+/* Table section: scrolls when table is too big (vertical or horizontal) */
+.table-section {
+  flex: 1 1 auto;
+  overflow: auto; /* allow both horizontal and vertical scrolling */
+  margin-top: 10px;
+}
+
+/* Table basics: auto-fit columns, no wrapping */
 table {
   font-size: 1.5rem;
   border-collapse: collapse;
-  table-layout: auto;                 /* AUTO column width based on content */
-  width: auto;                        /* allow the table to grow naturally */
-  white-space: nowrap;                /* keep everything on one line */
+  table-layout: auto;       /* auto width based on content */
+  width: max-content;       /* allow table to grow naturally; parent will scroll */
+  min-width: 100%;          /* ensure header spans full container width when narrow */
+  white-space: nowrap;      /* keep cells one line */
+  background: #fff;
 }
 
+/* Cells */
+th, td {
+  padding: 6px 10px;
+  border: 1px solid #333;
+  text-align: left;
+  white-space: nowrap;      /* prevent wrapping per cell */
+}
+
+/* Sticky header */
 thead th {
   position: sticky;
   top: 0;
-  background-color: #1e1e1e;
-  border-bottom: 2px solid #444;
+  background: #f8f9fa;      /* match page background */
   z-index: 2;
 }
 
-th, td {
-  padding: 8px 12px;
-  border: 1px solid #444;
-  text-align: left;
-  white-space: nowrap;                /* prevent wrapping in cells */
-}
+/* Status color classes (if you choose to use classes instead of inline styles) */
+.status-ok { color: green; font-weight: 600; }
+.status-pastdue { color: red; font-weight: 600; }
 
-.status-ok {
-  color: #00e676;                     /* green text */
-  font-weight: bold;
-}
-
-.status-pastdue {
-  color: #ff5252;                     /* red text */
-  font-weight: bold;
-}
-
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.error {
+/* Error message */
+.error-message {
   color: red;
   font-size: 1.2rem;
   text-align: center;
+  margin-top: 20px;
+}
+
+/* Responsive tweaks for very narrow screens / TVs in portrait */
+@media (max-width: 480px) {
+  table { font-size: 1.1rem; }
+  #orderTypeToggle { width: 140px; }
+  .header-section h1 { font-size: 1.6rem; gap: 6px; }
 }
