@@ -40,10 +40,10 @@ thead th { position: sticky; top: 0; background: #f8f9fa; z-index: 1; }
 
 <script>
 const hiddenColumnIndexes = [2,3,7,8];  // columns to hide
-const checkColumnIndex = 5;         // remove row if this column is empty
+const checkColumnIndex = 5;             // remove row if this column is empty
 const xlsxFileUrl = 'data/order_status_11122025_095944.xlsx';
 
-// Build HTML table manually
+// Build HTML table with cell-level coloring
 function buildHtmlTable(rows){
   const colCount = rows[0].length;
 
@@ -57,7 +57,11 @@ function buildHtmlTable(rows){
   for(let r = 1; r < rows.length; r++){
     tbody += '<tr>';
     for(let c = 0; c < colCount; c++){
-      tbody += `<td>${rows[r][c] !== undefined ? rows[r][c] : ''}</td>`;
+      const cellValue = rows[r][c] !== undefined ? rows[r][c] : '';
+      let color = '';
+      if(cellValue.toString().toUpperCase() === 'PAST DUE') color = 'red';
+      else if(cellValue.toString().toUpperCase() === 'OKAY') color = 'green';
+      tbody += `<td style="color: ${color}">${cellValue}</td>`;
     }
     tbody += '</tr>';
   }
