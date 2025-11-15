@@ -94,6 +94,12 @@ function loadAndRenderTable(){
       // Hide unwanted columns
       rows = rows.map(row => row.filter((_, colIndex) => !hiddenColumnIndexes.includes(colIndex)));
 
+      // If no rows remain, display message
+      if(rows.length === 0){
+        document.getElementById("output").innerHTML = "<p>No data to display.</p>";
+        return;
+      }
+
       // Pad rows to match header
       const colCount = rows[0].length;
       rows = rows.map(row => {
@@ -102,24 +108,24 @@ function loadAndRenderTable(){
         return newRow;
       });
 
-      // Build HTML table manually
+      // Build HTML table
       const html = buildHtmlTable(rows);
       document.getElementById("output").innerHTML = html;
 
-      // Initialize DataTables
-      $(document).ready(function(){
-        $('#output table').DataTable({
-          paging: true,
-          searching: true,
-          info: false,
-          scrollY: $('.table-section').height() + "px",
-          scrollCollapse: true,
-          scrollX: false,
-          responsive: true
-        });
+      // Initialize DataTables AFTER table exists
+      const table = document.querySelector("#output table");
+      $(table).DataTable({
+        paging: true,
+        searching: true,
+        info: false,
+        scrollY: $('.table-section').height() + "px",
+        scrollCollapse: true,
+        scrollX: false,
+        responsive: true
       });
     });
 }
+
 
 // Initial load
 loadAndRenderTable();
