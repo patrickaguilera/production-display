@@ -55,8 +55,8 @@ html, body {
 table {
   font-size: 1.5rem;
   border-collapse: collapse;
-  table-layout: auto;       /* auto width based on content */
-  width: max-content;       /* allow table to grow naturally; parent will scroll */
+  table-layout: fixed;
+  width: 100% !important;
   min-width: 100%;          /* ensure header spans full container width when narrow */
   white-space: nowrap;      /* keep cells one line */
   background: #fff;
