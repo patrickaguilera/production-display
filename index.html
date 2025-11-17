@@ -94,6 +94,7 @@ function renderFiltered(){
   const type = document.getElementById("orderTypeToggle").value;
   localStorage.setItem("orderTypeToggle", type);
   document.getElementById("output").innerHTML = buildHtmlTable(filterByDuty(allRows, type));
+  addEllipsisTooltips();
 }
 
 // Load XLSX
@@ -138,6 +139,13 @@ function loadAndRenderTable(){
 loadAndRenderTable();
 document.getElementById("orderTypeToggle").addEventListener("change", renderFiltered);
 
+// Add tooltips to first column
+function addEllipsisTooltips() {
+  document.querySelectorAll("table tbody tr td:first-child").forEach(td => {
+    td.title = td.textContent;  // full original content
+  });
+}
+  
 // Auto-refresh daily @ 8 AM
 function scheduleDailyRefresh(hour = 8, minute = 0){
   const now = new Date();
