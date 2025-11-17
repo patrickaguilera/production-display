@@ -100,7 +100,7 @@ thead th {
 /* Limit first visible column to 6 characters with ellipsis */
 table td:first-child,
 table th:first-child {
-  max-width: 200px;        /* width for ~6 characters */
+  max-width: 150px;        /* width for ~6 characters */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
