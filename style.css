@@ -97,14 +97,12 @@ thead th {
   .header-section h1 { font-size: 1.6rem; gap: 6px; }
 }
 
-/* Proper 6-character ellipsis column */
+/* Limit first visible column to 6 characters with ellipsis */
 table td:first-child,
 table th:first-child {
-  width: 6ch !important;
-  min-width: 6ch !important;
-  max-width: 6ch !important;
-
+  max-width: 100px;        /* width for ~6 characters */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
