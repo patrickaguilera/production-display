@@ -33,7 +33,7 @@
 </div>
 
 <script>
-const hiddenColumnIndexes = [2,3,7,8];     // columns to hide
+const hiddenColumnIndexes = [2,4,7,8];     // columns to hide
 // New visible column indexes
 const statusColumnIndex = 2;                // color "PAST DUE" or "OKAY"
 const partColumnIndex = 3;                  // part number
@@ -58,9 +58,21 @@ function buildHtmlTable(rows){
       const cellValue = rows[r][c] || "";
       let color = "";
 
-      if (c === statusColumnIndex){
-        if (cellValue.toUpperCase() === "PAST DUE") color = "red";
-        if (cellValue.toUpperCase() === "OKAY") color = "green";
+      // REQD DATE: color red if past due, green if today or future
+      if (c === statusColumnIndex) {
+          let date = new Date(cellValue);
+      
+          if (!isNaN(date.getTime())) { // valid date?
+              let today = new Date();
+              today.setHours(0,0,0,0);
+              date.setHours(0,0,0,0);
+      
+              if (date < today) {
+                  color = "red";    // past due
+              } else {
+                  color = "green";  // due today or future
+              }
+          }
       }
 
       tbody += `<td style="color:${color}">${cellValue}</td>`;
