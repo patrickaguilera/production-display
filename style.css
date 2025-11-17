@@ -70,6 +70,15 @@ th, td {
   white-space: nowrap;      /* prevent wrapping per cell */
 }
 
+/* Wrap last column text, max 3 lines, ellipsis */
+td:last-child {
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 /* Sticky header */
 thead th {
   position: sticky;
