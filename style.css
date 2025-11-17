@@ -90,6 +90,15 @@ thead th {
   margin-top: 20px;
 }
 
+/* Limit first visible column to 6 characters with ellipsis */
+table td:first-child,
+table th:first-child {
+  max-width: 6ch;        /* width for ~6 characters */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Responsive tweaks for very narrow screens / TVs in portrait */
 @media (max-width: 480px) {
   table { font-size: 1.1rem; }
