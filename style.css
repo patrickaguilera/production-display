@@ -99,7 +99,7 @@ thead th {
   margin-top: 20px;
 }
 
-/* Responsive tweaks for very narrow screens / TVs in portrait */
+/* Responsive tweaks for very narrow screens / TVs in portrait
 @media (max-width: 480px) {
   table { font-size: 1.1rem; }
   #orderTypeToggle { width: 140px; }
