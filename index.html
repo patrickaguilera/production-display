@@ -40,6 +40,17 @@ const partColumnIndex = 3;                  // part number
 const checkColumnIndex = 4;                 // remove rows where this column is empty
 const xlsxFileUrl = "data/latest.xlsx";
 
+// Manually set widths for each visible column
+const columnWidths = {
+  0: "6ch",    // first column (approx 8 characters)
+  1: "6ch",
+  2: "10ch",
+  3: "16ch",
+  4: "3ch",
+  5: "16ch"    // last column (wrapping allowed)
+};
+
+
 let allRows = [];
 
 // Build HTML table
@@ -48,34 +59,36 @@ function buildHtmlTable(rows){
 
   const colCount = rows[0].length;
   let thead = "<thead><tr>";
-  for (let i = 0; i < colCount; i++) thead += `<th>${rows[0][i]}</th>`;
+  for (let i = 0; i < colCount; i++) {
+    const width = columnWidths[i] ? `style="width:${columnWidths[i]}"` : "";
+    thead += `<th ${width}>${rows[0][i]}</th>`;
+  }
   thead += "</tr></thead>";
 
   let tbody = "<tbody>";
   for (let r = 1; r < rows.length; r++){
     tbody += "<tr>";
-    for (let c = 0; c < colCount; c++){
-      const cellValue = rows[r][c] || "";
-      let color = "";
-
-      // REQD DATE: color red if past due, green if today or future
+    for (let c = 0; c < colCount; c++) {
+      const width = columnWidths[c] ? `style="width:${columnWidths[c]};"` : "";
+      let extra = width;
+    
+      // Status color logic for the REQD DATE column
+      let cellValue = rows[r][c] || "";
+    
       if (c === statusColumnIndex) {
-          let date = new Date(cellValue);
-      
-          if (!isNaN(date.getTime())) { // valid date?
-              let today = new Date();
-              today.setHours(0,0,0,0);
-              date.setHours(0,0,0,0);
-      
-              if (date < today) {
-                  color = "red";    // past due
-              } else {
-                  color = "green";  // due today or future
-              }
-          }
+        const today = new Date().setHours(0,0,0,0);
+        const dateCell = new Date(cellValue).setHours(0,0,0,0);
+        if (!isNaN(dateCell)) {
+          if (dateCell < today) extra += "color:red;";
+          if (dateCell >= today) extra += "color:green;";
+        }
       }
+    
+      tbody += `<td style="${extra}">${cellValue}</td>`;
+    }
 
-      tbody += `<td style="color:${color}">${cellValue}</td>`;
+
+    tbody += `<td style="color:${color}">${cellValue}</td>`;
     }
     tbody += "</tr>";
   }
