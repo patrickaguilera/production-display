@@ -40,62 +40,67 @@ const partColumnIndex = 3;                  // part number
 const checkColumnIndex = 4;                 // remove rows where this column is empty
 const xlsxFileUrl = "data/latest.xlsx";
 
-// Manually set widths for each visible column
+// Manually define widths for each visible column
+// Use px, %, or ch (ch = character width)
 const columnWidths = {
-  0: "6ch",    // first column (approx 8 characters)
-  1: "6ch",
-  2: "10ch",
+  0: "6ch",     // first column (short code)
+  1: "14ch",
+  2: "12ch",    // REQD DATE column
   3: "16ch",
-  4: "3ch",
-  5: "16ch"    // last column (wrapping allowed)
+  4: "30ch"     // last column (wrapping allowed)
 };
 
-
-let allRows = [];
-
-// Build HTML table
-function buildHtmlTable(rows){
-  if(rows.length === 0) return "<p>No data to display.</p>";
+function buildHtmlTable(rows) {
+  if (rows.length === 0) return "<p>No data to display.</p>";
 
   const colCount = rows[0].length;
+
+  /* ---------- BUILD TABLE HEADER ---------- */
   let thead = "<thead><tr>";
   for (let i = 0; i < colCount; i++) {
-    const width = columnWidths[i] ? `style="width:${columnWidths[i]}"` : "";
+    const width = columnWidths[i] ? `style="width:${columnWidths[i]};"` : "";
     thead += `<th ${width}>${rows[0][i]}</th>`;
   }
   thead += "</tr></thead>";
 
+  /* ---------- BUILD TABLE BODY ---------- */
   let tbody = "<tbody>";
-  for (let r = 1; r < rows.length; r++){
+
+  for (let r = 1; r < rows.length; r++) {
     tbody += "<tr>";
+
     for (let c = 0; c < colCount; c++) {
-      const width = columnWidths[c] ? `style="width:${columnWidths[c]};"` : "";
-      let extra = width;
-    
-      // Status color logic for the REQD DATE column
       let cellValue = rows[r][c] || "";
-    
+      let style = "";
+
+      // Apply manual width
+      if (columnWidths[c]) {
+        style += `width:${columnWidths[c]};`;
+      }
+
+      // ===== STATUS COLUMN DATE COLORING =====
       if (c === statusColumnIndex) {
-        const today = new Date().setHours(0,0,0,0);
-        const dateCell = new Date(cellValue).setHours(0,0,0,0);
-        if (!isNaN(dateCell)) {
-          if (dateCell < today) extra += "color:red;";
-          if (dateCell >= today) extra += "color:green;";
+        const parsed = new Date(cellValue);
+        if (!isNaN(parsed)) {
+          const today = new Date().setHours(0, 0, 0, 0);
+          const cellDate = parsed.setHours(0, 0, 0, 0);
+
+          if (cellDate < today) style += "color:red; font-weight:bold;";
+          else style += "color:green; font-weight:bold;";
         }
       }
-    
-      tbody += `<td style="${extra}">${cellValue}</td>`;
+
+      tbody += `<td style="${style}">${cellValue}</td>`;
     }
 
-
-    tbody += `<td style="color:${color}">${cellValue}</td>`;
-    }
     tbody += "</tr>";
   }
+
   tbody += "</tbody>";
 
   return `<table>${thead}${tbody}</table>`;
 }
+
 
 // Determine Medium vs Light Duty
 function getDutyType(partNumber){
