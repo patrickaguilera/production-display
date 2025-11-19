@@ -41,13 +41,12 @@ const checkColumnIndex = 4;                 // remove rows where this column is 
 const xlsxFileUrl = "data/latest.xlsx";
 
 // Manually define widths for each visible column
-// Use px, %, or ch (ch = character width)
 const columnWidths = {
-  0: "8ch",     // first column (short code)
-  1: "7ch",
-  2: "12ch",
-  3: "18ch",
-  4: "3ch"
+  0: "10%",     // first column (short code)
+  1: "10%",
+  2: "15%",
+  3: "30%",
+  4: "5%"
 };
 
 function buildHtmlTable(rows) {
