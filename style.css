@@ -98,3 +98,12 @@ thead th {
   text-align: center;
   margin-top: 20px;
 }
+
+/* Limit first visible column to approx 6 characters w/ ellipsis */
+table td:first-child,
+table th:first-child {
+  max-width: 6.2ch !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
