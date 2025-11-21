@@ -80,7 +80,7 @@ function buildHtmlTable(rows) {
       // ===== STATUS COLUMN DATE COLORING =====
       if (c === statusColumnIndex) {
         const parsed = new Date(cellValue);
-        style += "text-align:right;";
+        style += "text-align:right !important;";
         if (!isNaN(parsed)) {
           const today = new Date().setHours(0, 0, 0, 0);
           const cellDate = parsed.setHours(0, 0, 0, 0);
