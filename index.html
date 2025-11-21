@@ -80,7 +80,6 @@ function buildHtmlTable(rows) {
       // ===== STATUS COLUMN DATE COLORING =====
       if (c === statusColumnIndex) {
         const parsed = new Date(cellValue);
-        style += "text-align:right !important;";
         if (!isNaN(parsed)) {
           const today = new Date().setHours(0, 0, 0, 0);
           const cellDate = parsed.setHours(0, 0, 0, 0);
@@ -90,7 +89,15 @@ function buildHtmlTable(rows) {
         }
       }
 
-      tbody += `<td style="${style}">${cellValue}</td>`;
+      let extraStyle = "";
+
+      // Right-align the CHECK column
+      if (c === checkColumnIndex) {
+          extraStyle += "text-align:right;";
+      }
+      
+      tbody += `<td style="color:${color};${extraStyle}">${cellValue}</td>`;
+
     }
 
     tbody += "</tr>";
@@ -188,7 +195,6 @@ function addEllipsisTooltips() {
         }
     });
 }
-
   
 // Auto-refresh daily @ 8 AM
 function scheduleDailyRefresh(hour = 8, minute = 0){
