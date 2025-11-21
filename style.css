@@ -99,17 +99,18 @@ thead th {
   margin-top: 20px;
 }
 
-/* Responsive tweaks for very narrow screens / TVs in portrait */
+
+/* Responsive tweaks for very narrow screens / TVs in portrait
 @media (max-width: 480px) {
   table { font-size: 1.1rem; }
   #orderTypeToggle { width: 140px; }
   .header-section h1 { font-size: 1.6rem; gap: 6px; }
 }
 
-/* Limit first visible column to approx 6 characters w/ ellipsis */
+/* Limit first visible column to approx 6 characters w/ ellipsis 
 table td:first-child,
 table th:first-child {
-  max-width: 6.2ch !important; /* True 6-character width */
+  max-width: 6.2ch !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
