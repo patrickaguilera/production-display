@@ -80,6 +80,7 @@ function buildHtmlTable(rows) {
       // ===== STATUS COLUMN DATE COLORING =====
       if (c === statusColumnIndex) {
         const parsed = new Date(cellValue);
+        style += "text-align:right;";
         if (!isNaN(parsed)) {
           const today = new Date().setHours(0, 0, 0, 0);
           const cellDate = parsed.setHours(0, 0, 0, 0);
@@ -170,10 +171,24 @@ document.getElementById("orderTypeToggle").addEventListener("change", renderFilt
 
 // Add tooltips to first column
 function addEllipsisTooltips() {
-  document.querySelectorAll("table tbody tr td:first-child td:last-child").forEach(td => {
-    td.title = td.textContent;  // full original content
-  });
+    const cells = document.querySelectorAll("td");
+
+    cells.forEach(cell => {
+        const fullText = cell.textContent.trim();
+
+        // Detect if the content is visually truncated
+        const isTruncated =
+            cell.scrollWidth > cell.clientWidth ||
+            cell.scrollHeight > cell.clientHeight;
+
+        if (isTruncated) {
+            cell.setAttribute("title", fullText);
+        } else {
+            cell.removeAttribute("title");
+        }
+    });
 }
+
   
 // Auto-refresh daily @ 8 AM
 function scheduleDailyRefresh(hour = 8, minute = 0){
