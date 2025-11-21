@@ -71,34 +71,40 @@ function buildHtmlTable(rows) {
     for (let c = 0; c < colCount; c++) {
       let cellValue = rows[r][c] || "";
       let style = "";
-
+  
       // Apply manual width
       if (columnWidths[c]) {
         style += `width:${columnWidths[c]};`;
       }
-
+  
       // ===== STATUS COLUMN DATE COLORING =====
       if (c === statusColumnIndex) {
         const parsed = new Date(cellValue);
         if (!isNaN(parsed)) {
-          const today = new Date().setHours(0, 0, 0, 0);
-          const cellDate = parsed.setHours(0, 0, 0, 0);
+          const today = new Date();
+          today.setHours(0,0,0,0);
+          const cellDate = parsed;
+          cellDate.setHours(0,0,0,0);
 
           if (cellDate < today) style += "color:red; font-weight:bold;";
-          else style += "color:green; font-weight:bold;";
+            else style += "color:green; font-weight:bold;";
         }
       }
-
-      let extraStyle = "";
-
+  
       // Right-align the CHECK column
       if (c === checkColumnIndex) {
-          extraStyle += "text-align:right;";
+        style += "text-align:right;";
       }
-      
-      tbody += `<td style="color:${color};${extraStyle}">${cellValue}</td>`;
+  
+      // Add tooltip for truncated cells (or last column)
+      let titleAttr = "";
+      if (c === colCount - 1) {
+        titleAttr = ` title="${cellValue}"`;
+      }
+  
+      tbody += `<td style="${style}"${titleAttr}>${cellValue}</td>`;
+    }  
 
-    }
 
     tbody += "</tr>";
   }
