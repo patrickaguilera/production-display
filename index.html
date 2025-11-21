@@ -170,7 +170,7 @@ document.getElementById("orderTypeToggle").addEventListener("change", renderFilt
 
 // Add tooltips to first column
 function addEllipsisTooltips() {
-  document.querySelectorAll("table tbody tr td:first-child").forEach(td => {
+  document.querySelectorAll("table tbody tr td:first-child td:last-child").forEach(td => {
     td.title = td.textContent;  // full original content
   });
 }
