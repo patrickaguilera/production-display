@@ -178,17 +178,13 @@ function loadData() {
       const wb = XLSX.read(data, { type: "array" });
       const ws = wb.Sheets[wb.SheetNames[0]];
 
-      let rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-      // remove hidden columns
-      rows = rows.map(row =>
-        row.filter((_, i) => !hiddenColumnIndexes.includes(i))
+      // REMOVE ONLY EMPTY ROWS (SAFE)
+      allRows = rows.filter(row =>
+        row[COL.QTY] != null &&
+        row[COL.QTY] !== ""
       );
-
-      // remove empty QTY rows
-      rows = rows.filter(row => row[COL.QTY] != null && row[COL.QTY] !== "");
-
-      allRows = rows;
 
       render();
     })
