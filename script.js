@@ -16,7 +16,7 @@ const COL = {
 };
 
 // Columns to remove completely from dataset
-const hiddenColumnIndexes = [2, 4, 7, 8, 10];
+const hiddenColumnIndexes = [2, 4, 7, 8];
 
 // Column widths (optional visual tuning)
 const columnWidths = {
