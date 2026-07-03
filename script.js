@@ -16,7 +16,7 @@ const COL = {
 };
 
 // Columns to remove completely from dataset
-const hiddenColumnIndexes = [2, 4, 7, 8, 10];
+const hiddenColumnIndexes = [2, 4, 7, 8];
 
 // Column widths (optional visual tuning)
 const columnWidths = {
@@ -122,11 +122,10 @@ function buildTable(rows) {
 
       // DESCRIPTION / COMMENTS SWITCH
       if (c === 5) {
-        const commentIndex = 10;
-
-        if (descriptionMode === "comments") {
-          val = rows[r][commentIndex] || "";
-        }
+        val =
+          descriptionMode === "description"
+            ? rows[r].description
+            : rows[r].comments;
       }
 
       // TOOLTIP IF TRUNCATED
@@ -149,9 +148,9 @@ function buildTable(rows) {
 ========================================================= */
 
 function filterByDuty(rows) {
-  return rows.filter((row, i) => {
+  return rows.filter((r, i) => {
     if (i === 0) return true;
-    return getDutyType(row[COL.PART]) === dutyMode;
+    return r.duty === dutyMode;
   });
 }
 
@@ -176,24 +175,23 @@ function loadData() {
     .then(data => {
       const wb = XLSX.read(data, { type: "array" });
       const ws = wb.Sheets[wb.SheetNames[0]];
-      let rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-      // Remove hidden columns
-      rows = rows.map(row =>
-        row.filter((_, i) => !hiddenColumnIndexes.includes(i))
-      );
+      let raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-      // Remove empty QTY rows
-      rows = rows.filter(row => row[COL.QTY] != null && row[COL.QTY] !== "");
-
-      allRows = rows;
+      // Build enriched dataset BEFORE column removal
+      allRows = raw.map(row => {
+        return {
+          original: row,
+          duty: getDutyType(row[COL.PART]),
+          qty: row[COL.QTY],
+          status: row[COL.STATUS],
+          part: row[COL.PART],
+          description: row[COL.DESCRIPTION],
+          comments: row[COL.COMMENTS]
+        };
+      });
 
       render();
-    })
-    .catch(err => {
-      console.error(err);
-      document.getElementById("output").innerHTML =
-        "<p>Error loading file</p>";
     });
 }
 
