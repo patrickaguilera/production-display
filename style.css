@@ -1,13 +1,16 @@
-/* Page base */
+
+/* =========================
+   BASE LAYOUT
+========================= */
+
 html, body {
   height: 100%;
   margin: 0;
-  background-color: #f8f9fa; /* original light bg */
   font-family: Arial, sans-serif;
-  color: #000;
+  background: #f8f9fa;
+  overflow: hidden;
 }
 
-/* Main container (keeps your existing structure) */
 .container-fluid {
   height: 100%;
   display: flex;
@@ -15,95 +18,140 @@ html, body {
   padding: 10px;
 }
 
-/* Header / clocks */
+/* =========================
+   HEADER
+========================= */
+
 .header-section {
   flex: 0 0 auto;
   text-align: center;
 }
+
 .header-section h1 {
-  font-size: 2.4rem; /* slightly smaller to fit the select inside */
-  margin: 8px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-/* Keep iframes sized and stacked as before */
-.clocks iframe {
-  width: 100%;
-  max-height: 200px;
-  margin-bottom: 5px;
-  border: 0;
-}
-
-/* Toggle inside the header: keep select sized reasonably */
-#orderTypeToggle {
-  display: inline-block;
-  vertical-align: middle;
-  width: 220px;
-}
-
-/* Table section: scrolls when table is too big (vertical or horizontal) */
-.table-section {
-  flex: 1 1 auto;
-  overflow: auto; /* allow both horizontal and vertical scrolling */
+  font-size: 2.4rem;
   margin-top: 10px;
 }
 
-/* Table basics: auto-fit columns, no wrapping */
+/* Clocks */
+.clocks iframe {
+  width: 100%;
+  border: 0;
+  margin-bottom: 5px;
+}
+
+/* =========================
+   SEGMENTED TOGGLE
+========================= */
+
+.toggle-group {
+  display: inline-flex;
+  border: 2px solid #0d6efd;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 10px auto;
+}
+
+.toggle-btn {
+  padding: 6px 18px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+.toggle-btn:hover {
+  background: #e9f1ff;
+}
+
+.toggle-btn.active {
+  background: #0d6efd;
+  color: white;
+}
+
+/* =========================
+   TABLE AREA
+========================= */
+
+.table-section {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+/* Table core */
 table {
-  font-size: 1.5rem;
+  width: 100% !important;
   border-collapse: collapse;
   table-layout: fixed;
-  width: 100% !important;
-  min-width: 100%;          /* ensure header spans full container width when narrow */
-  white-space: nowrap;      /* keep cells one line */
-  background: #fff;
+  background: white;
+  font-size: 1.4rem;
 }
 
 /* Cells */
 th, td {
-  padding: 6px 10px;
   border: 1px solid #333;
+  padding: 6px 10px;
   text-align: left;
-  white-space: nowrap;      /* prevent wrapping per cell */
-}
-
-/* Wrap last column text, max 3 lines, ellipsis */
-td:last-child {
-  white-space: normal;
+  white-space: nowrap;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }
 
 /* Sticky header */
 thead th {
   position: sticky;
   top: 0;
-  background: #f8f9fa;      /* match page background */
+  background: #f8f9fa;
   z-index: 2;
 }
 
-/* Status color classes */
-.status-ok { color: green; font-weight: 600; }
-.status-pastdue { color: red; font-weight: 600; }
+/* =========================
+   COLUMN BEHAVIOUR
+========================= */
 
-/* Error message */
-.error-message {
-  color: red;
-  font-size: 1.2rem;
-  text-align: center;
-  margin-top: 20px;
+/* First column = short code */
+td:first-child, th:first-child {
+  max-width: 8ch;
 }
 
-/* Limit first visible column to approx 6 characters w/ ellipsis */
-table td:first-child,
-table th:first-child {
-  max-width: 6.2ch !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/* Last column = wrap to 3 lines */
+td:last-child {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* Right-align numeric/QTY column (handled via JS class too) */
+.text-right {
+  text-align: right !important;
+}
+
+/* =========================
+   STATUS COLORS
+========================= */
+
+.status-ok {
+  color: green;
+  font-weight: bold;
+}
+
+.status-past {
+  color: red;
+  font-weight: bold;
+}
+
+/* =========================
+   RESPONSIVE (TV SAFE)
+========================= */
+
+@media (max-width: 768px) {
+  table {
+    font-size: 1.1rem;
+  }
+
+  .header-section h1 {
+    font-size: 1.6rem;
+  }
 }
