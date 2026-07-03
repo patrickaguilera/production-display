@@ -1,249 +1,199 @@
-
-/* =========================================================
-   CONFIGURATION (EDIT ONLY THIS SECTION IF NEEDED)
-========================================================= */
-
-// XLSX file
+const hiddenColumnIndexes = [2,4,7,8,10];     // columns to hide
+// New visible column indexes
+const statusColumnIndex = 2;                // color "PAST DUE" or "OKAY"
+const partColumnIndex = 3;                  // part number
+const checkColumnIndex = 4;                 // remove rows where this column is empty
 const xlsxFileUrl = "data/latest.xlsx";
 
-// ORIGINAL XLSX COLUMN MAP (DO NOT USE VISUAL INDEXES)
-const COL = {
-  STATUS: 2,        // REQD DATE (date-based color)
-  PART: 3,          // Part Number
-  QTY: 4,           // Right aligned / filter column
-  DESCRIPTION: 9,
-  COMMENTS: 10
-};
-
-// Columns to remove completely from dataset
-const hiddenColumnIndexes = [2, 4, 7, 8];
-
-// Column widths (optional visual tuning)
+// Manually define widths for each visible column
 const columnWidths = {
   0: "13%",
   1: "10%",
   2: "15%",
   3: "25%",
-  4: "10%"
+  4: "8%"
 };
 
-// Duty state
-let dutyMode = "medium";
-
-// Description mode toggle
-let descriptionMode = "description";
-
-// Full dataset cache
-let allRows = [];
-
-
-/* =========================================================
-   DUTY CLASSIFICATION
-========================================================= */
-
-function getDutyType(partNumber) {
-  if (!partNumber) return "light";
-
-  let str = String(partNumber).trim().toUpperCase();
-
-  // Ignore NS- prefix
-  if (str.startsWith("NS-")) {
-    str = str.substring(3);
-  }
-
-  if (!str.includes("-")) return "light";
-
-  const first = str.split("-")[0];
-
-  if (
-    first.includes("M") ||
-    first.includes("CA") ||
-    first.includes("HRNS")
-  ) {
-    return "medium";
-  }
-
-  return "light";
-}
-
-
-/* =========================================================
-   TABLE BUILDER
-========================================================= */
-
-function buildTable(rows) {
-  if (!rows.length) return "<p>No data</p>";
+function buildHtmlTable(rows) {
+  if (rows.length === 0) return "<p>No data to display.</p>";
 
   const colCount = rows[0].length;
 
-  let html = "<table><thead><tr>";
-
-  // HEADER
+  /* ---------- BUILD TABLE HEADER ---------- */
+  let thead = "<thead><tr>";
   for (let i = 0; i < colCount; i++) {
-    let label = rows[0][i];
-
-    // Replace Description header with toggle behavior
-    if (i === 5) {
-      label = `
-        <span class="desc-toggle" onclick="toggleDescriptionMode()">
-          ${descriptionMode === "description" ? "Description ▼" : "Comments ▼"}
-        </span>
-      `;
-    }
-
-    html += `<th style="width:${columnWidths[i] || "auto"}">${label}</th>`;
+    const width = columnWidths[i] ? `style="width:${columnWidths[i]};"` : "";
+    thead += `<th ${width}>${rows[0][i]}</th>`;
   }
+  thead += "</tr></thead>";
 
-  html += "</tr></thead><tbody>";
+  /* ---------- BUILD TABLE BODY ---------- */
+  let tbody = "<tbody>";
 
-  // BODY
   for (let r = 1; r < rows.length; r++) {
-    html += "<tr>";
+    tbody += "<tr>";
 
     for (let c = 0; c < colCount; c++) {
-      let val = rows[r][c] ?? "";
+      let cellValue = rows[r][c] || "";
       let style = "";
-      let className = "";
-
-      // RIGHT ALIGN QTY
-      if (c === 4) className += "text-right";
-
-      // STATUS DATE COLOR
-      if (c === COL.STATUS) {
-        const d = new Date(val);
-        if (!isNaN(d)) {
+  
+      // Apply manual width
+      if (columnWidths[c]) {
+        style += `width:${columnWidths[c]};`;
+      }
+  
+      // ===== STATUS COLUMN DATE COLORING =====
+      if (c === statusColumnIndex) {
+        const parsed = new Date(cellValue);
+        if (!isNaN(parsed)) {
           const today = new Date();
           today.setHours(0,0,0,0);
-          d.setHours(0,0,0,0);
+          const cellDate = parsed;
+          cellDate.setHours(0,0,0,0);
 
-          className += d < today ? " status-past" : " status-ok";
+          if (cellDate < today) style += "color:red; font-weight:bold;";
+            else style += "color:green; font-weight:bold;";
         }
       }
-
-      // DESCRIPTION / COMMENTS SWITCH
-      if (c === 5) {
-        val =
-          descriptionMode === "description"
-            ? rows[r].description
-            : rows[r].comments;
+  
+      // Right-align the CHECK column
+      if (c === checkColumnIndex) {
+        style += "text-align:right;";
       }
+  
+      // Add tooltip for truncated cells (or last column)
+      let titleAttr = "";
+      if (c === colCount - 1) {
+        titleAttr = ` title="${cellValue}"`;
+      }
+  
+      tbody += `<td style="${style}"${titleAttr}>${cellValue}</td>`;
+    }  
 
-      // TOOLTIP IF TRUNCATED
-      const title = `title="${String(val).replace(/"/g,'&quot;')}"`;
 
-      html += `<td class="${className}" ${title}>${val}</td>`;
-    }
-
-    html += "</tr>";
+    tbody += "</tr>";
   }
 
-  html += "</tbody></table>";
+  tbody += "</tbody>";
 
-  return html;
+  return `<table>${thead}${tbody}</table>`;
 }
 
 
-/* =========================================================
-   FILTERING
-========================================================= */
+// Determine Medium vs Light Duty
+function getDutyType(partNumber) {
+    if (partNumber === undefined || partNumber === null) return "light";
 
-function filterByDuty(rows) {
-  return rows.filter((r, i) => {
-    if (i === 0) return true;
-    return r.duty === dutyMode;
+    let str = String(partNumber).trim().toUpperCase();
+
+    // Remove optional NS- prefix
+    if (str.startsWith("NS-")) {
+        str = str.substring(3);
+    }
+
+    // Must still contain a dash after removing NS-
+    if (!str.includes("-")) return "light";
+
+    const firstGroup = str.split("-")[0];
+
+    // Medium Duty prefixes
+    if (
+        firstGroup.includes("M") ||
+        firstGroup.includes("CA") ||
+        firstGroup.includes("HRNS")
+    ) {
+        return "medium";
+    }
+
+    return "light";
+}
+
+function filterByDuty(rows, type){
+  return rows.filter((row, idx) => {
+    if (idx === 0) return true;
+    return getDutyType(row[partColumnIndex]) === type;
   });
 }
 
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function render() {
-  const filtered = filterByDuty(allRows);
-  document.getElementById("output").innerHTML = buildTable(filtered);
+function renderFiltered(){
+  const type = document.getElementById("orderTypeToggle").value;
+  localStorage.setItem("orderTypeToggle", type);
+  document.getElementById("output").innerHTML = buildHtmlTable(filterByDuty(allRows, type));
+  addEllipsisTooltips();
 }
 
-
-/* =========================================================
-   XLSX LOADER
-========================================================= */
-
-function loadData() {
+// Load XLSX
+function loadAndRenderTable(){
   fetch(xlsxFileUrl)
-    .then(r => r.arrayBuffer())
+    .then(res => {
+      if (!res.ok) throw new Error("File not found");
+      return res.arrayBuffer();
+    })
     .then(data => {
-      const wb = XLSX.read(data, { type: "array" });
-      const ws = wb.Sheets[wb.SheetNames[0]];
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.SheetNames[0];
+      let rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheet], { header: 1 });
 
-      let raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      rows = rows.map(row => row.filter((_, idx) => !hiddenColumnIndexes.includes(idx)));
 
-      // Build enriched dataset BEFORE column removal
-      allRows = raw.map(row => {
-        return {
-          original: row,
-          duty: getDutyType(row[COL.PART]),
-          qty: row[COL.QTY],
-          status: row[COL.STATUS],
-          part: row[COL.PART],
-          description: row[COL.DESCRIPTION],
-          comments: row[COL.COMMENTS]
-        };
+      rows = rows.filter(row => {
+        const v = row[checkColumnIndex];
+        return v !== undefined && v !== null && v !== "";
       });
 
-      render();
+      const colCount = rows[0].length;
+      rows = rows.map(r => {
+        while (r.length < colCount) r.push("");
+        return r;
+      });
+
+      allRows = rows;
+
+      const saved = localStorage.getItem("orderTypeToggle");
+      if (saved) document.getElementById("orderTypeToggle").value = saved;
+
+      renderFiltered();
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("output").innerHTML =
+        `<p class="error-message">Error loading table.</p>`;
     });
 }
 
+loadAndRenderTable();
+document.getElementById("orderTypeToggle").addEventListener("change", renderFiltered);
 
-/* =========================================================
-   TOGGLES
-========================================================= */
+// Add tooltips to first column
+function addEllipsisTooltips() {
+    const cells = document.querySelectorAll("td");
 
-document.getElementById("mediumBtn").onclick = () => {
-  dutyMode = "medium";
-  document.getElementById("mediumBtn").classList.add("active");
-  document.getElementById("lightBtn").classList.remove("active");
-  render();
-};
+    cells.forEach(cell => {
+        const fullText = cell.textContent.trim();
 
-document.getElementById("lightBtn").onclick = () => {
-  dutyMode = "light";
-  document.getElementById("lightBtn").classList.add("active");
-  document.getElementById("mediumBtn").classList.remove("active");
-  render();
-};
+        // Detect if the content is visually truncated
+        const isTruncated =
+            cell.scrollWidth > cell.clientWidth ||
+            cell.scrollHeight > cell.clientHeight;
 
-
-/* Description / Comments toggle */
-window.toggleDescriptionMode = function () {
-  descriptionMode =
-    descriptionMode === "description" ? "comments" : "description";
-  render();
-};
-
-
-/* =========================================================
-   AUTO REFRESH (8 AM DAILY)
-========================================================= */
-
-function scheduleRefresh(hour = 8) {
+        if (isTruncated) {
+            cell.setAttribute("title", fullText);
+        } else {
+            cell.removeAttribute("title");
+        }
+    });
+}
+  
+// Auto-refresh daily @ 8 AM
+function scheduleDailyRefresh(hour = 8, minute = 0){
   const now = new Date();
-  const next = new Date();
-
-  next.setHours(hour, 0, 0, 0);
+  let next = new Date();
+  next.setHours(hour, minute, 0, 0);
   if (now > next) next.setDate(next.getDate() + 1);
 
   setTimeout(() => {
-    loadData();
-    scheduleRefresh(hour);
+    loadAndRenderTable();
+    scheduleDailyRefresh(hour, minute);
   }, next - now);
 }
-
-
-/* =========================================================
-   STARTUP
-========================================================= */
-
-loadData();
-scheduleRefresh(8);
+scheduleDailyRefresh();
