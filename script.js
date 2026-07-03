@@ -122,10 +122,12 @@ function buildTable(rows) {
 
       // DESCRIPTION / COMMENTS SWITCH
       if (c === 5) {
+        const originalRow = allRows[r];
+      
         val =
           descriptionMode === "description"
-            ? rows[r].description
-            : rows[r].comments;
+            ? originalRow[COL.DESCRIPTION]
+            : originalRow[COL.COMMENTS];
       }
 
       // TOOLTIP IF TRUNCATED
@@ -148,9 +150,9 @@ function buildTable(rows) {
 ========================================================= */
 
 function filterByDuty(rows) {
-  return rows.filter((r, i) => {
+  return rows.filter((row, i) => {
     if (i === 0) return true;
-    return r.duty === dutyMode;
+    return getDutyType(row[COL.PART]) === dutyMode;
   });
 }
 
@@ -176,22 +178,24 @@ function loadData() {
       const wb = XLSX.read(data, { type: "array" });
       const ws = wb.Sheets[wb.SheetNames[0]];
 
-      let raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      let rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-      // Build enriched dataset BEFORE column removal
-      allRows = raw.map(row => {
-        return {
-          original: row,
-          duty: getDutyType(row[COL.PART]),
-          qty: row[COL.QTY],
-          status: row[COL.STATUS],
-          part: row[COL.PART],
-          description: row[COL.DESCRIPTION],
-          comments: row[COL.COMMENTS]
-        };
-      });
+      // remove hidden columns
+      rows = rows.map(row =>
+        row.filter((_, i) => !hiddenColumnIndexes.includes(i))
+      );
+
+      // remove empty QTY rows
+      rows = rows.filter(row => row[COL.QTY] != null && row[COL.QTY] !== "");
+
+      allRows = rows;
 
       render();
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("output").innerHTML =
+        "<p>Error loading file</p>";
     });
 }
 
