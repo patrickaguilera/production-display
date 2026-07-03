@@ -96,7 +96,7 @@ function buildTable(rows) {
     html += "<tr>";
 
     for (let c = 0; c < colCount; c++) {
-      let val = rows[r][c] ?? "";
+      let val = (rows[r] && rows[r][c] !== undefined) ? rows[r][c] : "";
       let className = "";
 
       /* RIGHT ALIGN QTY */
@@ -145,7 +145,8 @@ function buildTable(rows) {
 function filterByDuty(rows) {
   return rows.filter((row, i) => {
     if (i === 0) return true;
-    return getDutyType(row[COL.PART]) === dutyMode;
+    const part = row[COL.PART] || "";
+    return getDutyType(part) === dutyMode;
   });
 }
 
@@ -173,12 +174,8 @@ function loadData() {
 
       const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-      // REMOVE ONLY EMPTY QTY ROWS
-      allRows = rows.filter(row =>
-        row[COL.QTY] !== undefined &&
-        row[COL.QTY] !== null &&
-        row[COL.QTY] !== ""
-      );
+      // KEEP ALL ROWS (no dangerous filtering yet)
+      allRows = rows;
 
       render();
     })
