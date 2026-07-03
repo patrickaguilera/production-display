@@ -1,32 +1,39 @@
+
 /* =========================================================
-   CONFIGURATION
+   CONFIGURATION (EDIT ONLY THIS SECTION IF NEEDED)
 ========================================================= */
 
+// XLSX file
 const xlsxFileUrl = "data/latest.xlsx";
 
-/*
-  ORIGINAL XLSX COLUMN INDEXES (DO NOT CHANGE UNLESS FILE CHANGES)
-*/
+// ORIGINAL XLSX COLUMN MAP (DO NOT USE VISUAL INDEXES)
 const COL = {
-  STATUS: 2,
-  PART: 3,
-  QTY: 4,
+  STATUS: 2,        // REQD DATE (date-based color)
+  PART: 3,          // Part Number
+  QTY: 4,           // Right aligned / filter column
   DESCRIPTION: 9,
   COMMENTS: 10
 };
 
-/* Column layout in the rendered table */
-const VIEW = {
-  DESCRIPTION_COL: 5
+// Columns to remove completely from dataset
+const hiddenColumnIndexes = [2, 4, 7, 8, 10];
+
+// Column widths (optional visual tuning)
+const columnWidths = {
+  0: "13%",
+  1: "10%",
+  2: "15%",
+  3: "25%",
+  4: "10%"
 };
 
-/* Duty mode */
+// Duty state
 let dutyMode = "medium";
 
-/* description/comments toggle */
+// Description mode toggle
 let descriptionMode = "description";
 
-/* full dataset */
+// Full dataset cache
 let allRows = [];
 
 
@@ -39,7 +46,7 @@ function getDutyType(partNumber) {
 
   let str = String(partNumber).trim().toUpperCase();
 
-  // Remove NS- prefix (applies to both types)
+  // Ignore NS- prefix
   if (str.startsWith("NS-")) {
     str = str.substring(3);
   }
@@ -61,32 +68,30 @@ function getDutyType(partNumber) {
 
 
 /* =========================================================
-   RENDER TABLE
+   TABLE BUILDER
 ========================================================= */
 
 function buildTable(rows) {
-  if (!rows || rows.length === 0) {
-    return "<p>No data available</p>";
-  }
+  if (!rows.length) return "<p>No data</p>";
 
   const colCount = rows[0].length;
 
   let html = "<table><thead><tr>";
 
   // HEADER
-  for (let c = 0; c < colCount; c++) {
-    let header = rows[0][c];
+  for (let i = 0; i < colCount; i++) {
+    let label = rows[0][i];
 
-    // Replace Description header with toggle
-    if (c === VIEW.DESCRIPTION_COL) {
-      header = `
+    // Replace Description header with toggle behavior
+    if (i === 5) {
+      label = `
         <span class="desc-toggle" onclick="toggleDescriptionMode()">
           ${descriptionMode === "description" ? "Description ▼" : "Comments ▼"}
         </span>
       `;
     }
 
-    html += `<th>${header}</th>`;
+    html += `<th style="width:${columnWidths[i] || "auto"}">${label}</th>`;
   }
 
   html += "</tr></thead><tbody>";
@@ -96,16 +101,16 @@ function buildTable(rows) {
     html += "<tr>";
 
     for (let c = 0; c < colCount; c++) {
-      let val = (rows[r] && rows[r][c] !== undefined) ? rows[r][c] : "";
+      let val = rows[r][c] ?? "";
+      let style = "";
       let className = "";
 
-      /* RIGHT ALIGN QTY */
+      // RIGHT ALIGN QTY
       if (c === 4) className += "text-right";
 
-      /* REQD DATE COLOR */
+      // STATUS DATE COLOR
       if (c === COL.STATUS) {
         const d = new Date(val);
-
         if (!isNaN(d)) {
           const today = new Date();
           today.setHours(0,0,0,0);
@@ -115,16 +120,17 @@ function buildTable(rows) {
         }
       }
 
-      /* DESCRIPTION / COMMENTS TOGGLE */
-      if (c === VIEW.DESCRIPTION_COL) {
-        const desc = rows[r][COL.DESCRIPTION];
-        const comm = rows[r][COL.COMMENTS];
+      // DESCRIPTION / COMMENTS SWITCH
+      if (c === 5) {
+        const commentIndex = 10;
 
-        val = descriptionMode === "description" ? desc : comm;
+        if (descriptionMode === "comments") {
+          val = rows[r][commentIndex] || "";
+        }
       }
 
-      /* TOOLTIP */
-      const title = `title="${String(val).replace(/"/g, "&quot;")}"`;
+      // TOOLTIP IF TRUNCATED
+      const title = `title="${String(val).replace(/"/g,'&quot;')}"`;
 
       html += `<td class="${className}" ${title}>${val}</td>`;
     }
@@ -145,8 +151,7 @@ function buildTable(rows) {
 function filterByDuty(rows) {
   return rows.filter((row, i) => {
     if (i === 0) return true;
-    const part = row[COL.PART] || "";
-    return getDutyType(part) === dutyMode;
+    return getDutyType(row[COL.PART]) === dutyMode;
   });
 }
 
@@ -162,7 +167,7 @@ function render() {
 
 
 /* =========================================================
-   LOAD XLSX
+   XLSX LOADER
 ========================================================= */
 
 function loadData() {
@@ -171,10 +176,16 @@ function loadData() {
     .then(data => {
       const wb = XLSX.read(data, { type: "array" });
       const ws = wb.Sheets[wb.SheetNames[0]];
+      let rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      // Remove hidden columns
+      rows = rows.map(row =>
+        row.filter((_, i) => !hiddenColumnIndexes.includes(i))
+      );
 
-      // KEEP ALL ROWS (no dangerous filtering yet)
+      // Remove empty QTY rows
+      rows = rows.filter(row => row[COL.QTY] != null && row[COL.QTY] !== "");
+
       allRows = rows;
 
       render();
@@ -205,19 +216,17 @@ document.getElementById("lightBtn").onclick = () => {
   render();
 };
 
+
 /* Description / Comments toggle */
 window.toggleDescriptionMode = function () {
   descriptionMode =
-    descriptionMode === "description"
-      ? "comments"
-      : "description";
-
+    descriptionMode === "description" ? "comments" : "description";
   render();
 };
 
 
 /* =========================================================
-   AUTO REFRESH (8AM DAILY)
+   AUTO REFRESH (8 AM DAILY)
 ========================================================= */
 
 function scheduleRefresh(hour = 8) {
@@ -225,7 +234,6 @@ function scheduleRefresh(hour = 8) {
   const next = new Date();
 
   next.setHours(hour, 0, 0, 0);
-
   if (now > next) next.setDate(next.getDate() + 1);
 
   setTimeout(() => {
